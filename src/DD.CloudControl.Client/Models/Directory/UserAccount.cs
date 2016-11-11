@@ -71,11 +71,11 @@ namespace DD.CloudControl.Client.Models.Directory
 		[XmlElement("orgId")]
 		public Guid OrganizationId { get; set; }
 
-        /// <summary>
-        /// 	The user's password.
-        /// </summary>
-	    [XmlElement("password")]
-	    public string Password { get; set; }
+		/// <summary>
+		/// 	The user's password.
+		/// </summary>
+		[XmlElement("password")]
+		public string Password { get; set; }
 
 		/// <summary>
 		///		Roles (if any) to which the account belongs.

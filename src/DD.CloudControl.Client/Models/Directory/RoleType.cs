@@ -3,63 +3,63 @@ using System.Xml.Serialization;
 
 namespace DD.CloudControl.Client.Models.Directory
 {
-    /// <summary>
-    ///     Well-known CloudControl role types.
-    /// </summary>
-    [XmlRoot("roleType", Namespace = XmlNamespaces.Directory)]
-    public enum RoleType
-    {
-        /// <summary>
+	/// <summary>
+	///     Well-known CloudControl role types.
+	/// </summary>
+	[XmlRoot("roleType", Namespace = XmlNamespaces.Directory)]
+	public enum RoleType
+	{
+		/// <summary>
 		///		An unknown role type.
 		/// </summary>
-        Unknown = 0,
+		Unknown = 0,
 
-        /// <summary>
+		/// <summary>
 		///		The backup role.
 		/// </summary>
-        [XmlEnum("backup")]
-        Backup,
+		[XmlEnum("backup")]
+		Backup,
 
-        /// <summary>
+		/// <summary>
 		///		The create image role.
 		/// </summary>
-        [XmlEnum("create image")]
-        CreateImage,
+		[XmlEnum("create image")]
+		CreateImage,
 
-        /// <summary>
+		/// <summary>
 		///		The network role.
 		/// </summary>
-        [XmlEnum("network")]
-        Network,
+		[XmlEnum("network")]
+		Network,
 
-        /// <summary>
+		/// <summary>
 		///		The read-only role.
 		/// </summary>
-        [XmlEnum("read only")]
-        ReadOnly,
+		[XmlEnum("read only")]
+		ReadOnly,
 
-        /// <summary>
+		/// <summary>
 		///		The server role.
 		/// </summary>
-        [XmlEnum("server")]
-        Server,
+		[XmlEnum("server")]
+		Server,
 
-        /// <summary>
+		/// <summary>
 		///		The storage role.
 		/// </summary>
-        [XmlEnum("storage")]
-        Storage,
+		[XmlEnum("storage")]
+		Storage,
 
-        /// <summary>
+		/// <summary>
 		///		The reports role.
 		/// </summary>
-        [XmlEnum("reports")]
-        Reports,
+		[XmlEnum("reports")]
+		Reports,
 
-        /// <summary>
-        ///     The tag role.
-        /// </summary>
-        [XmlEnum("tag")]
-        Tag
-    }
+		/// <summary>
+		///     The tag role.
+		/// </summary>
+		[XmlEnum("tag")]
+		Tag
+	}
 }

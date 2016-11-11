@@ -30,9 +30,9 @@
 	},
 
 	"dependencies": {
-		"HTTPlease": "1.0.0-beta2-0175",
-		"HTTPlease.Formatters.Json": "1.0.0-beta2-0175",
-		"HTTPlease.Formatters.Xml": "1.0.0-beta2-0175"
+		"HTTPlease": "1.0.0-beta3-0184",
+		"HTTPlease.Formatters.Json": "1.0.0-beta3-0184",
+		"HTTPlease.Formatters.XmlSerializer": "1.0.0-beta3-0184"
 	},
 
 	"frameworks": {
