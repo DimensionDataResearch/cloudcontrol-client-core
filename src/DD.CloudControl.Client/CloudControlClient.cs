@@ -36,7 +36,7 @@ namespace DD.CloudControl.Client
         /// <param name="httpClient">
 		/// 	The HTTP client used to communicate with the CloudControl API.
 		/// </param>
-		CloudControlClient(HttpClient httpClient)
+		internal CloudControlClient(HttpClient httpClient)
 		{
 			if (httpClient == null)
 				throw new ArgumentNullException(nameof(httpClient));
