@@ -1,5 +1,7 @@
 using HTTPlease;
 using HTTPlease.Formatters;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace DD.CloudControl.Client.Requests
 {
@@ -21,7 +23,8 @@ namespace DD.CloudControl.Client.Requests
         /// </summary>
 		public static readonly HttpRequest BaseRequestV22 =
 			HttpRequest.Factory.Create("caas/2.2")
-				.UseJson()
+				.UseJson(JsonSettings)
+				.UseXmlSerializer() // Errors always come back as XML (go figure)
 				.ExpectJson();
 
 		/// <summary>
@@ -29,7 +32,29 @@ namespace DD.CloudControl.Client.Requests
         /// </summary>
 		public static readonly HttpRequest BaseRequestV23 =
 			HttpRequest.Create("caas/2.3")
-				.UseJson()
+				.UseJson(JsonSettings)
+				.UseXmlSerializer() // Errors always come back as XML (go figure)
 				.ExpectJson();
+
+		/// <summary>
+        ///		The base definition for CloudControl v2.3 API requests.
+        /// </summary>
+		public static readonly HttpRequest BaseRequestV24 =
+			HttpRequest.Create("caas/2.4")
+				.UseJson(JsonSettings)
+				.UseXmlSerializer() // Errors always come back as XML (go figure)
+				.ExpectJson();
+
+		/// <summary>
+		/// 	JSON serialisation settings for the CloudControl API.
+		/// </summary>
+		static JsonSerializerSettings JsonSettings => new JsonSerializerSettings
+		{
+			Converters =
+			{
+				new StringEnumConverter()
+			},
+			DateFormatHandling = DateFormatHandling.IsoDateFormat
+		};
 	}
 }

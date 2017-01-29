@@ -5,10 +5,10 @@
   },
   "dependencies": {
     "DD.CloudControl.Client": "1.0.0-*",
-    "HTTPlease": "1.0.0-beta3-0184",
-    "HTTPlease.Formatters.Json": "1.0.0-beta3-0184",
-    "HTTPlease.Formatters.XmlSerializer": "1.0.0-beta3-0184",
-    "HTTPlease.Testability.Xunit": "1.0.0-beta3-0184",
+    "HTTPlease": "1.0.0-beta3-0190",
+    "HTTPlease.Formatters.Json": "1.0.0-beta3-0190",
+    "HTTPlease.Formatters.XmlSerializer": "1.0.0-beta3-0190",
+    "HTTPlease.Testability.Xunit": "1.0.0-beta3-0190",
     "System.Runtime.Serialization.Primitives": "4.1.1",
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "1.0.0-rc2-build10015"

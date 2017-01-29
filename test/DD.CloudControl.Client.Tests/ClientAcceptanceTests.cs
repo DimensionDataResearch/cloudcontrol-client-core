@@ -5,6 +5,7 @@ using Xunit;
 namespace DD.CloudControl.Client.Tests
 {
 	using Models.Directory;
+	using Models.Network;
 
 	/// <summary>
 	/// 	High-level acceptance tests for the CloudControl API client.
@@ -35,7 +36,7 @@ namespace DD.CloudControl.Client.Tests
 		ClientCredentials Credentials { get; }
 
 		/// <summary>
-		/// 	Get a the current user's account details.
+		/// 	Get the current user's account details.
 		/// </summary>
         // [Fact] TODO: Enable once we've moved this to DD.CloudControl.Client.AcceptanceTests.
         public async Task Client_GetAccount()
@@ -49,6 +50,40 @@ namespace DD.CloudControl.Client.Tests
 			UserAccount account = await client.GetAccount();
 			Assert.NotNull(account);
 			Assert.Equal(Credentials.User, account.UserName);
+        }
+
+		/// <summary>
+		/// 	List network domains in the "AU9" (Sydney) datacenter.
+		/// </summary>
+        // [Fact] TODO: Enable once we've moved this to DD.CloudControl.Client.AcceptanceTests.
+        public async Task Client_ListNetworkDomains_AU9()
+        {
+			CloudControlClient client = CloudControlClient.Create(
+				baseUri: new Uri("https://api-au.dimensiondata.com/"),
+				userName: Credentials.User,
+				password: Credentials.Password
+			);
+
+			Paging page = new Paging
+			{
+				PageSize = 20
+			};
+
+			NetworkDomains networkDomains = await client.ListNetworkDomains("AU9", page);
+			int expectedTotalCount = networkDomains.TotalCount;
+			int totalCount = 0;
+			while (!networkDomains.IsEmpty)
+			{
+				totalCount += networkDomains.PageCount;
+				
+				foreach (NetworkDomain networkDomain in networkDomains)
+					Console.WriteLine("NetworkDomain: " + networkDomain.Name);
+
+				page++;
+				networkDomains = await client.ListNetworkDomains("AU9", page);
+			}
+
+			Assert.Equal(expectedTotalCount, totalCount);
         }
 
 		/// <summary>

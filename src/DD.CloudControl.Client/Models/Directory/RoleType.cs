@@ -11,6 +11,9 @@ namespace DD.CloudControl.Client.Models.Directory
 		/// <summary>
 		///		An unknown role type.
 		/// </summary>
+		/// <remarks>
+		///		Used to detect uninitialised values; do not use directly.
+		/// </remarks>
 		Unknown = 0,
 
 		/// <summary>

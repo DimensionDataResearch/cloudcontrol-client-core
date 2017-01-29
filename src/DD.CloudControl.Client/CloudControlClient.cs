@@ -13,7 +13,7 @@ namespace DD.CloudControl.Client
     /// <summary>
     ///		The CloudControl API client. 
     /// </summary>
-    public class CloudControlClient
+    public partial class CloudControlClient
 	{
 		/// <summary>
         ///		Factory for <see cref="HttpClient"/>s used by the <see cref="CloudControlClient"/>. 
