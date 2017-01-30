@@ -14,7 +14,7 @@ namespace DD.CloudControl.Client.Tests
 		/// <summary>
 		/// 	The organisation Id used in tests.
 		/// </summary>
-		protected static readonly Guid OrganizationId = new Guid("22edd5e3-a235-4d3c-b5b2-d2843aa77d41");
+		protected static readonly Guid TestOrganizationId = new Guid("22edd5e3-a235-4d3c-b5b2-d2843aa77d41");
 
 		/// <summary>
 		/// 	The base address for client APIs.
@@ -39,7 +39,7 @@ namespace DD.CloudControl.Client.Tests
 			FullName = "Test User",
 			EmailAddress = "test.user@mycompany.com",
 			Department = "TestDepartment",
-			OrganizationId = OrganizationId
+			OrganizationId = TestOrganizationId
 		};
 
 		/// <summary>

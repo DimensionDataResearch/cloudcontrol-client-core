@@ -1,5 +1,4 @@
 using HTTPlease.Testability;
-using System;
 using System.Threading.Tasks;
 using System.Net;
 using Xunit;
@@ -27,7 +26,6 @@ namespace DD.CloudControl.Client.Tests
 		[Fact]
 		public async Task Get_Account_Success()
 		{
-			// TODO: Make CloudControlClient disposable.
 			CloudControlClient client = CreateCloudControlClient(request =>
 			{
 				MessageAssert.AcceptsMediaType(request, "text/xml");
@@ -38,15 +36,18 @@ namespace DD.CloudControl.Client.Tests
 				return request.CreateResponse(HttpStatusCode.OK, MyAccountXml, mediaType: "text/xml");
 			});
 			
-			UserAccount account = await client.GetAccount();
-			Assert.NotNull(account);
-			Assert.Equal("test_user", account.UserName);
-			Assert.Equal("Test User", account.FullName);
-			Assert.Equal("Test", account.FirstName);
-			Assert.Equal("User", account.LastName);
-			Assert.Equal("test.user@mycompany.com", account.EmailAddress);
-			Assert.Equal("Department 1", account.Department);
-			Assert.Equal(new Guid("f200382b-ff46-4878-9041-14a72009f9ad"), account.OrganizationId);
+			using (client)
+			{
+				UserAccount account = await client.GetAccount();
+				Assert.NotNull(account);
+				Assert.Equal("test_user", account.UserName);
+				Assert.Equal("Test User", account.FullName);
+				Assert.Equal("Test", account.FirstName);
+				Assert.Equal("User", account.LastName);
+				Assert.Equal("test.user@mycompany.com", account.EmailAddress);
+				Assert.Equal("Department 1", account.Department);
+				Assert.Equal(TestOrganizationId, account.OrganizationId);
+			}
 		}
 
 		/// <summary>
@@ -62,7 +63,7 @@ namespace DD.CloudControl.Client.Tests
     <ns8:department>Department 1</ns8:department>
     <ns8:customDefined1></ns8:customDefined1>
     <ns8:customDefined2></ns8:customDefined2>
-    <ns8:orgId>f200382b-ff46-4878-9041-14a72009f9ad</ns8:orgId>
+    <ns8:orgId>22edd5e3-a235-4d3c-b5b2-d2843aa77d41</ns8:orgId>
     <ns8:roles>
         <ns8:role>
             <ns8:name>server</ns8:name>

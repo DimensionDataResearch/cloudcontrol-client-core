@@ -13,7 +13,8 @@ namespace DD.CloudControl.Client
     /// <summary>
     ///		The CloudControl API client. 
     /// </summary>
-    public partial class CloudControlClient
+    public sealed partial class CloudControlClient
+		: IDisposable
 	{
 		/// <summary>
         ///		Factory for <see cref="HttpClient"/>s used by the <see cref="CloudControlClient"/>. 
@@ -23,18 +24,28 @@ namespace DD.CloudControl.Client
 		/// <summary>
         ///		 The HTTP client used to communicate with the CloudControl API.
         /// </summary>
-		readonly HttpClient _httpClient;
+		readonly HttpClient	_httpClient;
 
 		/// <summary>
         ///		Cached user account information. 
         /// </summary>
-		UserAccount _account;
+		UserAccount			_account;
+
+		/// <summary>
+		/// 	Has the client been disposed?
+		/// </summary>
+		/// <remarks>
+		/// 	1 means disposed.
+		/// </remarks>
+		int					_isDisposed;
 
 		/// <summary>
         ///		Create a new <see cref="CloudControlClient"/>.
         /// </summary>
         /// <param name="httpClient">
 		/// 	The HTTP client used to communicate with the CloudControl API.
+		/// 
+		/// 	Disposing the client will dispose this HTTP client.
 		/// </param>
 		/// <param name="account">
 		/// 	Optional user account information to pre-populate the cache.
@@ -46,6 +57,29 @@ namespace DD.CloudControl.Client
 
 			_httpClient = httpClient;
 			_account = account;
+		}
+
+		/// <summary>
+		/// 	Dispose of resources being used by the client.
+		/// </summary>
+		public void Dispose()
+		{
+			bool alreadyDisposed =
+				Interlocked.Exchange(ref _isDisposed, 1) == 1;
+
+			if (alreadyDisposed)
+				return;
+
+			_httpClient.Dispose();
+		}
+
+		/// <summary>
+		/// 	Check if the client has been disposed.
+		/// </summary>
+		void CheckDisposed()
+		{
+			if (_isDisposed == 1)
+				throw new ObjectDisposedException(nameof(CloudControlClient));
 		}
 
 		/// <summary>

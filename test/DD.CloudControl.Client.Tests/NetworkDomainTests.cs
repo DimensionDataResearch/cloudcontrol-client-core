@@ -26,7 +26,7 @@ namespace DD.CloudControl.Client.Tests
 					"application/json"
 				);
 				MessageAssert.HasRequestUri(request,
-					CreateApiUri($"caas/2.4/{OrganizationId}/network/networkDomain/?datacenterId=AU9")
+					CreateApiUri($"caas/2.4/{TestOrganizationId}/network/networkDomain/?datacenterId=AU9")
 				);
 
 				return request.CreateResponse(HttpStatusCode.OK,
@@ -35,10 +35,13 @@ namespace DD.CloudControl.Client.Tests
 				);
 			});
 
-			NetworkDomains networkDomains = await client.ListNetworkDomains(datacenterId: "AU9");
-			Assert.NotNull(networkDomains);
-			Assert.Equal(2, networkDomains.TotalCount);
-			Assert.Equal(2, networkDomains.Items.Count);
+			using (client)
+			{
+				NetworkDomains networkDomains = await client.ListNetworkDomains(datacenterId: "AU9");
+				Assert.NotNull(networkDomains);
+				Assert.Equal(2, networkDomains.TotalCount);
+				Assert.Equal(2, networkDomains.Items.Count);
+			}
 		}
 
 		/// <summary>

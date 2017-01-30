@@ -47,9 +47,12 @@ namespace DD.CloudControl.Client.Tests
 				password: Credentials.Password
 			);
 
-			UserAccount account = await client.GetAccount();
-			Assert.NotNull(account);
-			Assert.Equal(Credentials.User, account.UserName);
+			using (client)
+			{
+				UserAccount account = await client.GetAccount();
+				Assert.NotNull(account);
+				Assert.Equal(Credentials.User, account.UserName);
+			}
         }
 
 		/// <summary>
@@ -64,26 +67,29 @@ namespace DD.CloudControl.Client.Tests
 				password: Credentials.Password
 			);
 
-			Paging page = new Paging
+			using (client)
 			{
-				PageSize = 20
-			};
+				Paging page = new Paging
+				{
+					PageSize = 20
+				};
 
-			NetworkDomains networkDomains = await client.ListNetworkDomains("AU9", page);
-			int expectedTotalCount = networkDomains.TotalCount;
-			int totalCount = 0;
-			while (!networkDomains.IsEmpty)
-			{
-				totalCount += networkDomains.PageCount;
-				
-				foreach (NetworkDomain networkDomain in networkDomains)
-					Console.WriteLine("NetworkDomain: " + networkDomain.Name);
+				NetworkDomains networkDomains = await client.ListNetworkDomains("AU9", page);
+				int expectedTotalCount = networkDomains.TotalCount;
+				int totalCount = 0;
+				while (!networkDomains.IsEmpty)
+				{
+					totalCount += networkDomains.PageCount;
+					
+					foreach (NetworkDomain networkDomain in networkDomains)
+						Console.WriteLine("NetworkDomain: " + networkDomain.Name);
 
-				page++;
-				networkDomains = await client.ListNetworkDomains("AU9", page);
+					page++;
+					networkDomains = await client.ListNetworkDomains("AU9", page);
+				}
+
+				Assert.Equal(expectedTotalCount, totalCount);
 			}
-
-			Assert.Equal(expectedTotalCount, totalCount);
         }
 
 		/// <summary>
