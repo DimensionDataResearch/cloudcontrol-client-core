@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace DD.CloudControl.Client.Models.Network
@@ -63,60 +61,12 @@ namespace DD.CloudControl.Client.Models.Network
 	/// </summary>
 	[JsonObject]
 	public class NetworkDomains
-		: PagedResult, IEnumerable<NetworkDomain>
+		: PagedResult<NetworkDomain>
 	{
 		/// <summary>
 		/// 	The network domains.
 		/// </summary>
 		[JsonProperty("networkDomain", ObjectCreationHandling = ObjectCreationHandling.Reuse)]
-		public List<NetworkDomain> Items { get; } = new List<NetworkDomain>();
-
-		/// <summary>
-		/// 	Get a typed enumerator for the network domains.
-		/// </summary>
-		/// <returns>
-		/// 	The typed enumerator.
-		/// </returns>
-		public IEnumerator<NetworkDomain> GetEnumerator() => Items.GetEnumerator();
-
-		/// <summary>
-		/// 	Get an untyped enumerator for the network domains.
-		/// </summary>
-		/// <returns>
-		/// 	The untyped enumerator.
-		/// </returns>
-		IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
-	}
-
-	/// <summary>
-	/// 	Well-known network domain types.
-	/// </summary>
-	public enum NetworkDomainType
-	{
-		/// <summary>
-		///		An unknown network domain type.
-		/// </summary>
-		/// <remarks>
-		///		Used to detect uninitialised values; do not use directly.
-		/// </remarks>
-		Unknown = 0,
-
-		/// <summary>
-		///		A basic network domain.
-		/// </summary>
-		/// <remarks>
-		///		Supports all features except load-balancing and anti-affinity.
-		/// </remarks>
-		[EnumMember(Value = "ESSENTIALS")]
-		Essentials = 1,
-
-		/// <summary>
-		///		An advanced network domain.
-		/// </summary>
-		/// <remarks>
-		///		Supports all features, including load-balancing and anti-affinity.
-		/// </remarks>
-		[EnumMember(Value = "ADVANCED")]
-		Advanced = 2
+		public override List<NetworkDomain> Items { get; } = new List<NetworkDomain>();
 	}
 }

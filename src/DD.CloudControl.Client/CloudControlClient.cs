@@ -83,6 +83,16 @@ namespace DD.CloudControl.Client
 		}
 
 		/// <summary>
+		/// 	Reset the client, clearing all cached data.
+		/// </summary>
+		public void Reset()
+		{
+			CheckDisposed();
+
+			_account = null;
+		}
+
+		/// <summary>
         ///		Retrieve the user's account information. 
         /// </summary>
         /// <param name="cancellationToken">
@@ -110,6 +120,8 @@ namespace DD.CloudControl.Client
 		/// </returns>
 		public async Task<UserAccount> GetAccount(bool refresh, CancellationToken cancellationToken = default(CancellationToken))
 		{
+			CheckDisposed();
+
 			if (_account != null && !refresh)
 				return _account;
 

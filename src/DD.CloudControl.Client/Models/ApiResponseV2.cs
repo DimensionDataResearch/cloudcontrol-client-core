@@ -100,6 +100,12 @@ namespace DD.CloudControl.Client.Models
 		/// 	Invalid input data was supplied in the request.
 		/// </summary>
 		[EnumMember(Value = "INVALID_INPUT_DATA")]
-		InvalidInputData = 3
+		InvalidInputData = 3,
+
+		/// <summary>
+		/// 	The specified resource was not found.
+		/// </summary>
+		[EnumMember(Value = "RESOURCE_NOT_FOUND")]
+		ResourceNotFound = 4
 	}
 }

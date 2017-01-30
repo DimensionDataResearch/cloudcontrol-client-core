@@ -18,6 +18,11 @@ namespace DD.CloudControl.Client.Requests
 		static HttpRequest NetworkDomain = Base.WithRelativeUri("networkDomain");
 
 		/// <summary>
+		/// 	Request definition for retrieving a specific network domain by Id.
+		/// </summary>
+		public static HttpRequest GetNetworkDomainById = NetworkDomain.WithRelativeUri("{networkDomainId}");
+
+		/// <summary>
 		/// 	Request definition for listing network domains.
 		/// </summary>
 		public static HttpRequest ListNetworkDomains = NetworkDomain.WithRelativeUri("?datacenterId={datacenterId?}&pageNumber={pageNumber?}&pageSize={pageSize?}");
