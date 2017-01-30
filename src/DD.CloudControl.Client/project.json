@@ -30,9 +30,9 @@
     "defaultNamespace": "DD.CloudControl.Client"
   },
   "dependencies": {
-    "HTTPlease": "1.0.0-beta3-0190",
-    "HTTPlease.Formatters.Json": "1.0.0-beta3-0190",
-    "HTTPlease.Formatters.XmlSerializer": "1.0.0-beta3-0190"
+    "HTTPlease": "1.0.0-beta3-0195",
+    "HTTPlease.Formatters.Json": "1.0.0-beta3-0195",
+    "HTTPlease.Formatters.XmlSerializer": "1.0.0-beta3-0195"
   },
   "frameworks": {
     "netstandard1.6": {

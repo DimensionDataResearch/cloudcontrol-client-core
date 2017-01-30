@@ -1,4 +1,4 @@
-using HTTPlease.Formatters;
+using HTTPlease;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
