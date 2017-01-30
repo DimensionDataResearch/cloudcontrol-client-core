@@ -36,12 +36,16 @@ namespace DD.CloudControl.Client
         /// <param name="httpClient">
 		/// 	The HTTP client used to communicate with the CloudControl API.
 		/// </param>
-		internal CloudControlClient(HttpClient httpClient)
+		/// <param name="account">
+		/// 	Optional user account information to pre-populate the cache.
+		/// </param>
+		internal CloudControlClient(HttpClient httpClient, UserAccount account = null)
 		{
 			if (httpClient == null)
 				throw new ArgumentNullException(nameof(httpClient));
 
 			_httpClient = httpClient;
+			_account = account;
 		}
 
 		/// <summary>

@@ -1,6 +1,5 @@
 using HTTPlease.Testability;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net;
 using Xunit;
@@ -10,15 +9,11 @@ namespace DD.CloudControl.Client.Tests
 	using Models.Directory;
 
     /// <summary>
-    /// 	Tests for the client's Account APIs.
+    /// 	Tests for the client's account APIs.
     /// </summary>
     public class AccountTests
+		: ClientTestBase
 	{
-		/// <summary>
-		/// 	The base address for client APIs.
-		/// </summary>
-		static readonly Uri ApiBaseAddress = new Uri("http://fake.api/");
-
 		/// <summary>
 		/// 	Create a new account test suite.
 		/// </summary>
@@ -52,78 +47,6 @@ namespace DD.CloudControl.Client.Tests
 			Assert.Equal("test.user@mycompany.com", account.EmailAddress);
 			Assert.Equal("Department 1", account.Department);
 			Assert.Equal(new Guid("f200382b-ff46-4878-9041-14a72009f9ad"), account.OrganizationId);
-		}
-
-		/// <summary>
-		/// 	Create a URI relative to the base addres for the CloudControl API.
-		/// </summary>
-		/// <param name="relativeUri">
-		/// 	The relative URI.
-		/// </param>
-		/// <returns>
-		/// 	The absolute URI.
-		/// </returns>
-		static Uri CreateApiUri(string relativeUri)
-		{
-			return CreateApiUri(
-				new Uri(relativeUri, UriKind.Relative)
-			);
-		}
-
-		/// <summary>
-		/// 	Create a URI relative to the base addres for the CloudControl API.
-		/// </summary>
-		/// <param name="relativeUri">
-		/// 	The relative URI.
-		/// </param>
-		/// <returns>
-		/// 	The absolute URI.
-		/// </returns>
-		static Uri CreateApiUri(Uri relativeUri)
-		{
-			if (relativeUri == null)
-				throw new ArgumentNullException(nameof(relativeUri));
-
-			return new Uri(ApiBaseAddress, relativeUri);
-		}
-		
-		/// <summary>
-		/// 	Create a new CloudControl API client.
-		/// </summary>
-		/// <param name="httpClient">
-		/// 	The HTTP client used to communicate with the CloudControl API.
-		/// </param>
-		/// <returns>
-		/// 	The configured <see cref="CloudControlClient"/>.
-		/// </returns>
-		static CloudControlClient CreateCloudControlClient(Func<HttpRequestMessage, HttpResponseMessage> handler)
-		{
-			if (handler == null)
-				throw new ArgumentNullException(nameof(handler));
-
-			HttpClient httpClient = TestClients.RespondWith(handler);
-			httpClient.BaseAddress = ApiBaseAddress;
-
-			return new CloudControlClient(httpClient);
-		}
-
-		/// <summary>
-		/// 	Create a new CloudControl API client.
-		/// </summary>
-		/// <param name="httpClient">
-		/// 	The HTTP client used to communicate with the CloudControl API.
-		/// </param>
-		/// <returns>
-		/// 	The configured <see cref="CloudControlClient"/>.
-		/// </returns>
-		static CloudControlClient CreateCloudControlClient(HttpClient httpClient)
-		{
-			if (httpClient == null)
-				throw new ArgumentNullException(nameof(httpClient));
-
-			httpClient.BaseAddress = ApiBaseAddress;
-
-			return new CloudControlClient(httpClient);
 		}
 
 		/// <summary>
