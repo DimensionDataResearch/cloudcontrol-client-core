@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -107,5 +108,37 @@ namespace DD.CloudControl.Client.Models
 		/// </summary>
 		[EnumMember(Value = "RESOURCE_NOT_FOUND")]
 		ResourceNotFound = 4
+	}
+
+	/// <summary>
+	/// 	Extension methods for <see cref="ApiResponseV2"/> and friends.
+	/// </summary>
+	public static class ApiResponseExtensions
+	{
+		/// <summary>
+		/// 	Get a message by name (if present).
+		/// </summary>
+		/// <param name="messages">
+		/// 	The API response messages to examine.
+		/// </param>
+		/// <param name="name">
+		/// 	The name of the target message.
+		/// </param>
+		/// <returns>
+		/// 	The message value, or <c>null</c> if no message is present with the specified name.
+		/// </returns>
+		public static string GetByName(this IEnumerable<ApiMessageV2> messages, string name)
+		{
+			if (messages == null)
+				throw new ArgumentNullException(nameof(messages));
+
+			foreach (ApiMessageV2 message in messages)
+			{
+				if (message.Name == name)
+					return message.Value;
+			}
+
+			return null;
+		}
 	}
 }

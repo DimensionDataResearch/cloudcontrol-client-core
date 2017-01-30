@@ -1,4 +1,3 @@
-using HTTPlease.Formatters;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -20,8 +19,22 @@ namespace DD.CloudControl.Client
 		/// <param name="message">
 		/// 	The exception message.
 		/// </param>
-		CloudControlException(string message)
+		internal CloudControlException(string message)
 			: base(message)
+		{
+		}
+
+		/// <summary>
+		/// 	Create a new <see cref="CloudControlException"/>.
+		/// </summary>
+		/// <param name="message">
+		/// 	The exception message.
+		/// </param>
+		/// <param name="innerException">
+		/// 	The exception that caused the <see cref="CloudControlException"/> to be raised.
+		/// </param>
+		internal CloudControlException(string message, Exception innerException)
+			: base(message, innerException)
 		{
 		}
 
@@ -34,20 +47,6 @@ namespace DD.CloudControl.Client
 		/// 	The HTTP status code (if known).
 		/// </summary>
 		public HttpStatusCode StatusCode { get; private set; } = 0;
-
-		/// <summary>
-		/// 	Create a new <see cref="CloudControlException"/>.
-		/// </summary>
-		/// <param name="message">
-		/// 	The exception message.
-		/// </param>
-		/// <param name="innerException">
-		/// 	The exception that caused the <see cref="CloudControlException"/> to be raised.
-		/// </param>
-		CloudControlException(string message, Exception innerException)
-			: base(message, innerException)
-		{
-		}
 
 		/// <summary>
 		/// 	Create a <see cref="CloudControlException"/> from a v2 API response.
@@ -63,22 +62,9 @@ namespace DD.CloudControl.Client
 			if (response == null)
 				throw new ArgumentNullException(nameof(response));
 
-			try
-			{
-				ApiResponseV2 apiResponse = await response.ReadContentAsAsync<ApiResponseV2>();
-
-				return FromApiV2Response(apiResponse, response.StatusCode);
-			}
-			catch (Exception eReadApiResponse)
-			{
-				string requestMethod = response.RequestMessage?.Method?.Method ?? "UNKNOWN_METHOD";
-				string requestUri = response.RequestMessage?.RequestUri?.AbsoluteUri ?? "UNKNOWN_URI";
-
-				return new CloudControlException(
-					$"Failed to read {requestMethod} response from '{requestUri}' (HTTP status code {response.StatusCode}).",
-					eReadApiResponse
-				);
-			}
+			ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
+			
+			return FromApiV2Response(apiResponse, response.StatusCode);
 		}
 
 		/// <summary>

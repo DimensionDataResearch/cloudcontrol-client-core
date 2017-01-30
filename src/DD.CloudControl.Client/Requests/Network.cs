@@ -18,6 +18,11 @@ namespace DD.CloudControl.Client.Requests
 		static HttpRequest NetworkDomain = Base.WithRelativeUri("networkDomain");
 
 		/// <summary>
+		/// 	Request definition for creating a new network domain.
+		/// </summary>
+		public static HttpRequest CreateNetworkDomain = Base.WithRelativeUri("deployNetworkDomain");
+
+		/// <summary>
 		/// 	Request definition for retrieving a specific network domain by Id.
 		/// </summary>
 		public static HttpRequest GetNetworkDomainById = NetworkDomain.WithRelativeUri("{networkDomainId}");

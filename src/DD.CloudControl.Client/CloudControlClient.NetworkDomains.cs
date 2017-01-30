@@ -16,6 +16,57 @@ namespace DD.CloudControl.Client
 	public partial class CloudControlClient
 	{
 		/// <summary>
+		/// 	Create a new network domain.
+		/// </summary>
+		/// <param name="datacenterId">
+		/// 	The Id of the target datacenter (e.g. AU10, NA9).
+		/// </param>
+		/// <param name="name">
+		/// 	The name of the new network domain.
+		/// </param>
+		/// <param name="description">
+		/// 	The description (if any) for the new network domain.
+		/// </param>
+		/// <param name="type">
+		/// 	The network domain type.
+		/// </param>
+		/// <returns>
+		/// 	The Id of the new network domain.
+		/// </returns>
+		public async Task<Guid> CreateNetworkDomain(string datacenterId, string name, string description, NetworkDomainType type)
+		{
+			if (String.IsNullOrWhiteSpace(datacenterId))
+				throw new ArgumentException("Must supply a valid datacenter Id.", nameof(datacenterId));
+
+			if (String.IsNullOrWhiteSpace(name))
+				throw new ArgumentException("Must supply a valid name.", nameof(datacenterId));
+
+			if (description == null)
+				description = "";
+
+			HttpResponseMessage response = await
+				_httpClient.PostAsJsonAsync(Requests.Network.CreateNetworkDomain, new CreateNetworkDomain
+				{
+					Name = name,
+					Description = description,
+					Type = type,
+					DatacenterId = datacenterId
+				});
+			using (response)
+			{
+				ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
+				if (apiResponse.ResponseCode != ApiResponseCodeV2.Success)
+					throw CloudControlException.FromApiV2Response(apiResponse, response.StatusCode);
+
+				string networkDomainId = apiResponse.InfoMessages.GetByName("networkDomainId");
+				if (String.IsNullOrWhiteSpace(networkDomainId))
+					throw new CloudControlException("Received an unexpected response from the CloudControl API (missing 'networkDomainId' message).");
+
+				return new Guid(networkDomainId);
+			}
+		}
+
+		/// <summary>
 		/// 	Retrieve a specific network domain by Id.
 		/// </summary>
 		/// <param name="networkDomainId">
@@ -42,7 +93,7 @@ namespace DD.CloudControl.Client
 			{
 				if (!response.IsSuccessStatusCode)
 				{
-					ApiResponseV2 apiResponse = await response.ReadContentAsAsync<ApiResponseV2>();
+					ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
 					if (apiResponse.ResponseCode == ApiResponseCodeV2.ResourceNotFound)
 						return null;
 
