@@ -113,10 +113,9 @@ namespace DD.CloudControl.Client
 			if (_account != null && !refresh)
 				return _account;
 
-			_account = await
-				_httpClient.GetAsync(Requests.Directory.UserAccount, cancellationToken)
-				.ReadAsAsync<UserAccount>() // AF: Ugh, no overloads with cancellation support yet. FIXME!
-				.ConfigureAwait(false);
+			_account = await _httpClient
+				.GetAsync(Requests.Directory.UserAccount, cancellationToken)
+				.ReadAsAsync<UserAccount>();
 
 			return _account;
 		}
