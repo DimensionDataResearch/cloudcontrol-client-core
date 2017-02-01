@@ -19,7 +19,6 @@ namespace DD.CloudControl.Client.Tests
 		[Fact]
 		public async Task ListNetworkDomains_Success()
 		{
-			// TODO: Make CloudControlClient disposable.
 			CloudControlClient client = CreateCloudControlClientWithUserAccount(request =>
 			{
 				MessageAssert.AcceptsMediaType(request,
@@ -42,6 +41,24 @@ namespace DD.CloudControl.Client.Tests
 				Assert.Equal(2, networkDomains.TotalCount);
 				Assert.Equal(2, networkDomains.Items.Count);
 			}
+		}
+
+		/// <summary>
+		/// 	Request bodies used in tests.
+		/// </summary>
+		static class TestRequests
+		{
+			/// <summary>
+			/// 	Request for CreateNetworkDomain (successful).
+			/// </summary>
+			public const string CreateNetworkDomain_Success = @"
+{
+	""name"": ""A Network Domain"",
+	""description"": ""This is a network domain"",
+	""type"": ""ESSENTIALS"",
+	""datacenterId"": ""AU9""
+}
+			";
 		}
 
 		/// <summary>
@@ -80,6 +97,26 @@ namespace DD.CloudControl.Client.Tests
 	""pageCount"": 2,
 	""totalCount"": 2,
 	""pageSize"": 250
+}
+			";
+
+			/// <summary>
+			/// 	Request for CreateNetworkDomain (successful).
+			/// </summary>
+			public const string CreateNetworkDomain_Success = @"
+{
+	""operation"": ""DEPLOY_NETWORK_DOMAIN"",
+	""responseCode"": ""IN_PROGRESS"",
+	""message"": ""Request to deploy Network Domain 'A Network Domain' has been accepted and is being processed."",
+	""info"": [
+		{
+			""name"": ""networkDomainId"",
+			""value"": ""f14a871f-9a25-470c-aef8-51e13202e1aa""
+		}
+	],
+	""warning"": [],
+	""error"": [],
+	""requestId"": ""na9_20160321T074626030-0400_7e9fffe7-190b-46f2-9107-9d52fe57d0ad""
 }
 			";
 		}
