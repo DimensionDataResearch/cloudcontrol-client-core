@@ -1,6 +1,7 @@
 using HTTPlease.Testability;
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace DD.CloudControl.Client.Tests
 {
@@ -93,6 +94,28 @@ namespace DD.CloudControl.Client.Tests
 			httpClient.BaseAddress = ApiBaseAddress;
 
 			return new CloudControlClient(httpClient);
+		}
+
+		/// <summary>
+		/// 	Create a new CloudControl API client pre-populated with the default user account details.
+		/// </summary>
+		/// <param name="httpClient">
+		/// 	The HTTP client used to communicate with the CloudControl API.
+		/// </param>
+		/// <returns>
+		/// 	The configured <see cref="CloudControlClient"/>.
+		/// </returns>
+		protected static CloudControlClient CreateCloudControlClientWithUserAccount(Func<HttpRequestMessage, Task<HttpResponseMessage>> handler)
+		{
+			if (handler == null)
+				throw new ArgumentNullException(nameof(handler));
+
+			HttpClient httpClient = TestClients.AsyncRespondWith(handler);
+			httpClient.BaseAddress = ApiBaseAddress;
+
+			return new CloudControlClient(httpClient,
+				account: GetDefaultUserAccount()
+			);
 		}
 
 		/// <summary>

@@ -44,8 +44,11 @@ namespace DD.CloudControl.Client
 			if (description == null)
 				description = "";
 
+			Guid organizationId = await GetOrganizationId();
+			HttpRequest request = Requests.Network.CreateNetworkDomain.WithTemplateParameter("organizationId", organizationId);
+
 			HttpResponseMessage response = await
-				_httpClient.PostAsJsonAsync(Requests.Network.CreateNetworkDomain, new CreateNetworkDomain
+				_httpClient.PostAsJsonAsync(request, new CreateNetworkDomain
 				{
 					Name = name,
 					Description = description,
@@ -55,7 +58,7 @@ namespace DD.CloudControl.Client
 			using (response)
 			{
 				ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
-				if (apiResponse.ResponseCode != ApiResponseCodeV2.Success)
+				if (apiResponse.ResponseCode != ApiResponseCodeV2.InProgress)
 					throw CloudControlException.FromApiV2Response(apiResponse, response.StatusCode);
 
 				string networkDomainId = apiResponse.InfoMessages.GetByName("networkDomainId");

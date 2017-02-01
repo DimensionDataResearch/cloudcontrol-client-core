@@ -140,5 +140,30 @@ namespace DD.CloudControl.Client.Models
 
 			return null;
 		}
+
+		/// <summary>
+		/// 	Determine whether the specified API v2 response code indicates success.
+		/// </summary>
+		/// <param name="responseCode">
+		/// 	The response code.
+		/// </param>
+		/// <returns>
+		/// 	<c>true</c>, if the response code indicates success; otherwise, <c>false</c>.
+		/// </returns>
+		public static bool IndicatesSuccess(this ApiResponseCodeV2 responseCode)
+		{
+			switch (responseCode)
+			{
+				case ApiResponseCodeV2.Success:
+				case ApiResponseCodeV2.InProgress:
+				{
+					return true;
+				}
+				default:
+				{
+					return false;
+				}
+			}
+		}
 	}
 }

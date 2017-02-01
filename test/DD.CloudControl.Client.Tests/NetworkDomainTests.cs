@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using HTTPlease.Testability;
@@ -5,12 +6,14 @@ using Xunit;
 
 namespace DD.CloudControl.Client.Tests
 {
-	using Models.Network;
+    using Models.Network;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
-	/// <summary>
-	/// 	Tests for the client's network domain APIs.
-	/// </summary>
-	public class NetworkDomainTests
+    /// <summary>
+    /// 	Tests for the client's network domain APIs.
+    /// </summary>
+    public class NetworkDomainTests
 		: ClientTestBase
 	{
 		/// <summary>
@@ -44,6 +47,56 @@ namespace DD.CloudControl.Client.Tests
 		}
 
 		/// <summary>
+		/// 	Create a new network domain.
+		/// </summary>
+		[Fact]
+		public async Task CreateNetworkDomain_Success()
+		{
+			CloudControlClient client = CreateCloudControlClientWithUserAccount(async request =>
+			{
+				MessageAssert.AcceptsMediaType(request,
+					"application/json"
+				);
+				MessageAssert.HasRequestUri(request,
+					CreateApiUri($"caas/2.4/{TestOrganizationId}/network/deployNetworkDomain")
+				);
+
+				JObject expectedRequestBody = (JObject)JToken.Parse(
+					TestRequests.CreateNetworkDomain_Success
+				);
+				
+				JObject actualRequestBody = (JObject)JToken.Parse(
+					await request.Content.ReadAsStringAsync()
+				);
+
+				Assert.Equal(
+					expectedRequestBody.ToString(Formatting.Indented).Trim(),
+					actualRequestBody.ToString(Formatting.Indented).Trim()
+				);
+
+				return request.CreateResponse(HttpStatusCode.OK,
+					responseBody: TestResponses.CreateNetworkDomain_Success,
+					mediaType: "application/json"
+				);
+			});
+
+			using (client)
+			{
+				Guid expectedNetworkDomainId = new Guid("f14a871f-9a25-470c-aef8-51e13202e1aa");
+				Guid actualNetworkDomainId = await client.CreateNetworkDomain(
+					datacenterId: "AU9",
+					name: "A Network Domain",
+					description: "This is a network domain",
+					type: NetworkDomainType.Essentials
+				);
+				Assert.Equal(
+					expectedNetworkDomainId,
+					actualNetworkDomainId
+				);
+			}
+		}
+
+		/// <summary>
 		/// 	Request bodies used in tests.
 		/// </summary>
 		static class TestRequests
@@ -55,8 +108,8 @@ namespace DD.CloudControl.Client.Tests
 {
 	""name"": ""A Network Domain"",
 	""description"": ""This is a network domain"",
-	""type"": ""ESSENTIALS"",
-	""datacenterId"": ""AU9""
+	""datacenterId"": ""AU9"",
+	""type"": ""ESSENTIALS""	
 }
 			";
 		}
@@ -101,7 +154,7 @@ namespace DD.CloudControl.Client.Tests
 			";
 
 			/// <summary>
-			/// 	Request for CreateNetworkDomain (successful).
+			/// 	Response for CreateNetworkDomain (successful).
 			/// </summary>
 			public const string CreateNetworkDomain_Success = @"
 {
