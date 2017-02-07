@@ -12,6 +12,9 @@ namespace DD.CloudControl.Client.Tests
 		/// </summary>
 		public ClientCredentials()
 		{
+			if (Environment.GetEnvironmentVariable("CC_CLIENT_ACCTEST") != "1")
+				return;
+
 			User = Environment.GetEnvironmentVariable("MCP_USER");
 			if (User == null)
 				throw new InvalidOperationException("MCP_USER environment variable has not been specified.");
@@ -24,12 +27,11 @@ namespace DD.CloudControl.Client.Tests
 		/// <summary>
 		/// 	The user name for authenticating to the CloudControl API.
 		/// </summary>
-		public string User { get; }
+		public string User { get; } = "";
 
 		/// <summary>
 		/// 	The password for authenticating to the CloudControl API.
 		/// </summary>
-		/// <returns></returns>
-		public string Password { get; }
+		public string Password { get; } = "";
 	}
 }

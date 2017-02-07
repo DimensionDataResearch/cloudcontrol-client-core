@@ -28,7 +28,7 @@ namespace DD.CloudControl.Client.Tests
 					"application/json"
 				);
 				MessageAssert.HasRequestUri(request,
-					CreateApiUri($"caas/2.4/{TestOrganizationId}/network/networkDomain/?datacenterId=AU9")
+					CreateApiUri($"caas/2.4/{TestOrganizationId}/network/networkDomain?datacenterId=AU9")
 				);
 
 				return request.CreateResponse(HttpStatusCode.OK,
@@ -40,6 +40,43 @@ namespace DD.CloudControl.Client.Tests
 			using (client)
 			{
 				NetworkDomains networkDomains = await client.ListNetworkDomains(datacenterId: "AU9");
+				Assert.NotNull(networkDomains);
+				Assert.Equal(2, networkDomains.TotalCount);
+				Assert.Equal(2, networkDomains.Items.Count);
+			}
+		}
+
+		/// <summary>
+		/// 	List network domains (successful).
+		/// </summary>
+		[Fact]
+		public async Task ListNetworkDomains_Paged_Success()
+		{
+			CloudControlClient client = CreateCloudControlClientWithUserAccount(request =>
+			{
+				MessageAssert.AcceptsMediaType(request,
+					"application/json"
+				);
+				MessageAssert.HasRequestUri(request,
+					CreateApiUri($"caas/2.4/{TestOrganizationId}/network/networkDomain?datacenterId=AU9&pageNumber=1&pageSize=250")
+				);
+
+				return request.CreateResponse(HttpStatusCode.OK,
+					responseBody: TestResponses.ListNetworkDomains_Success,
+					mediaType: "application/json"
+				);
+			});
+
+			using (client)
+			{
+				NetworkDomains networkDomains = await client.ListNetworkDomains(
+					datacenterId: "AU9",
+					paging: new Paging
+					{
+						PageNumber = 1,
+						PageSize = 250
+					}
+				);
 				Assert.NotNull(networkDomains);
 				Assert.Equal(2, networkDomains.TotalCount);
 				Assert.Equal(2, networkDomains.Items.Count);
