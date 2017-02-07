@@ -6,6 +6,7 @@ namespace DD.CloudControl.Client.Tests
 {
 	using Models.Directory;
 	using Models.Network;
+	using Utilities;
 
 	/// <summary>
 	/// 	High-level acceptance tests for the CloudControl API client.
@@ -38,7 +39,7 @@ namespace DD.CloudControl.Client.Tests
 		/// <summary>
 		/// 	Get the current user's account details.
 		/// </summary>
-        // [Fact] TODO: Enable once we've moved this to DD.CloudControl.Client.AcceptanceTests.
+        [AcceptanceFact]
         public async Task Client_GetAccount()
         {
 			CloudControlClient client = CloudControlClient.Create(
@@ -58,7 +59,7 @@ namespace DD.CloudControl.Client.Tests
 		/// <summary>
 		/// 	List network domains in the "AU9" (Sydney) datacenter.
 		/// </summary>
-        // [Fact] TODO: Enable once we've moved this to DD.CloudControl.Client.AcceptanceTests.
+        [AcceptanceFact]
         public async Task Client_ListNetworkDomains_AU9()
         {
 			CloudControlClient client = CloudControlClient.Create(
