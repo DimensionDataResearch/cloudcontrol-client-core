@@ -76,16 +76,8 @@ namespace DD.CloudControl.Client
 				{
 					organizationId,
 					networkDomainId
-				});
-
-			if (paging != null)
-			{
-				request = request.WithTemplateParameters(new
-				{
-					pageNumber = paging.PageNumber,
-					pageSize = paging.PageSize
-				});
-			}
+				})
+				.WithPaging(paging);
 
 			using (HttpResponseMessage response = await _httpClient.GetAsync(request, cancellationToken))
 			{
