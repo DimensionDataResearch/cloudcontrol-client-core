@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace DD.CloudControl.Client.Models.Network
 {
@@ -62,5 +63,19 @@ namespace DD.CloudControl.Client.Models.Network
 		/// </summary>
 		[JsonProperty("datacenterId")]
 		public string DatacenterId { get; set; }
+	}
+
+	/// <summary>
+	/// 	A page of <see cref="Vlan"/>s.
+	/// </summary>
+	[JsonObject]
+	public class Vlans
+		: PagedResult<Vlan>
+	{
+		/// <summary>
+		/// 	The network domains.
+		/// </summary>
+		[JsonProperty("vlan", ObjectCreationHandling = ObjectCreationHandling.Reuse)]
+		public override List<Vlan> Items { get; } = new List<Vlan>();
 	}
 }

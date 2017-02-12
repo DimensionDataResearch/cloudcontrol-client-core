@@ -51,5 +51,49 @@ namespace DD.CloudControl.Client
 				return await response.ReadContentAsAsync<Vlan>();
 			}
 		}
+
+		/// <summary>
+		/// 	Retrieve a list of VLANs in the specified network domain.
+		/// </summary>
+		/// <param name="networkDomainId">
+		/// 	The Id of the target network domain.
+		/// </param>
+		/// <param name="paging">
+		/// 	An optional <see cref="Paging"/> configuration for the results.
+		/// </param>
+		/// <param name="cancellationToken">
+		/// 	An optional cancellation token that can be used to cancel the operation.
+		/// </param>
+		/// <returns>
+		/// 	A <see cref="Vlans"/> representing the page of results.
+		/// </returns>
+		public async Task<Vlans> ListVlans(string networkDomainId, Paging paging = null, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			Guid organizationId = await GetOrganizationId();
+
+			HttpRequest request = Requests.Network.ListVlansInNetworkDomain
+				.WithTemplateParameters(new
+				{
+					organizationId,
+					networkDomainId
+				});
+
+			if (paging != null)
+			{
+				request = request.WithTemplateParameters(new
+				{
+					pageNumber = paging.PageNumber,
+					pageSize = paging.PageSize
+				});
+			}
+
+			using (HttpResponseMessage response = await _httpClient.GetAsync(request, cancellationToken))
+			{
+				if (!response.IsSuccessStatusCode)
+					throw await CloudControlException.FromApiV2Response(response);
+
+				return await response.ReadContentAsAsync<Vlans>();
+			}
+		}
 	}
 }

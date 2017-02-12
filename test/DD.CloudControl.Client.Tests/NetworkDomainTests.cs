@@ -47,7 +47,7 @@ namespace DD.CloudControl.Client.Tests
 		}
 
 		/// <summary>
-		/// 	List network domains (successful).
+		/// 	List a page of network domains (successful).
 		/// </summary>
 		[Fact]
 		public async Task ListNetworkDomains_Paged_Success()
