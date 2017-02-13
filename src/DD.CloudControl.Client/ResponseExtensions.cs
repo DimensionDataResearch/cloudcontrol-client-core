@@ -10,7 +10,7 @@ namespace DD.CloudControl.Client
 	/// <summary>
 	/// 	Extensions for <see cref="HttpResponseMessage"/>.
 	/// </summary>
-	public static class ResponseExtensions
+	static class ResponseExtensions
 	{
 		/// <summary>
 		/// 	Read the response content as an <see cref="ApiResponseV2"/>.

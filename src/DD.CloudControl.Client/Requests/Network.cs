@@ -26,5 +26,15 @@ namespace DD.CloudControl.Client.Requests
 		/// 	Request definition for listing network domains.
 		/// </summary>
 		public static HttpRequest ListNetworkDomains = Base.WithRelativeUri("networkDomain?datacenterId={datacenterId?}&pageNumber={pageNumber?}&pageSize={pageSize?}");
+
+		/// <summary>
+		/// 	Request definition for retrieving a specific VLAN by Id.
+		/// </summary>
+		public static HttpRequest GetVlanById = Base.WithRelativeUri("vlan/{vlanId}");
+
+		/// <summary>
+		/// 	Request definition for listing VLANs in a network domain.
+		/// </summary>
+		public static HttpRequest ListVlansInNetworkDomain = Base.WithRelativeUri("vlan?networkDomainId={networkDomainId?}&pageNumber={pageNumber?}&pageSize={pageSize?}");
 	}
 }
