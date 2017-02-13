@@ -1,5 +1,4 @@
 using HTTPlease;
-using HTTPlease.Formatters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

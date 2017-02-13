@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
     <DebugType>portable</DebugType>
@@ -13,10 +12,9 @@
     <RepositoryUrl>https://github.com/DimensionDataResearch/compute-client-core</RepositoryUrl>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="HTTPlease" Version="1.0.0-beta3-0195" />
-    <PackageReference Include="HTTPlease.Formatters.Json" Version="1.0.0-beta3-0195" />
-    <PackageReference Include="HTTPlease.Formatters.XmlSerializer" Version="1.0.0-beta3-0195" />
+    <PackageReference Include="HTTPlease" Version="1.0.0-beta3-0201" />
+    <PackageReference Include="HTTPlease.Formatters.Json" Version="1.0.0-beta3-0201" />
+    <PackageReference Include="HTTPlease.Formatters.XmlSerializer" Version="1.0.0-beta3-0201" />
   </ItemGroup>
 </Project>

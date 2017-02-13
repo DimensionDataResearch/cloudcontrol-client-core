@@ -1,5 +1,4 @@
 using HTTPlease;
-using HTTPlease.Formatters;
 using System;
 using System.Net.Http;
 using System.Threading;
@@ -40,10 +39,13 @@ namespace DD.CloudControl.Client
 		/// 	
 		///		Default is <see cref="VlanGatewayAddressing.Low"/>.
 		/// </param>
+		/// <param name="cancellationToken">
+		/// 	An optional cancellation token that can be used to cancel the request.
+		/// </param>
 		/// <returns>
 		/// 	The Id of the new VLAN.
 		/// </returns>
-		public async Task<Guid> CreateVlan(string name, string description, string networkDomainId, string privateIPv4BaseAddress, int privateIPv4PrefixSize = 24, VlanGatewayAddressing gatewayAddressing = VlanGatewayAddressing.Low)
+		public async Task<Guid> CreateVlan(string name, string description, string networkDomainId, string privateIPv4BaseAddress, int privateIPv4PrefixSize = 24, VlanGatewayAddressing gatewayAddressing = VlanGatewayAddressing.Low, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (String.IsNullOrWhiteSpace(name))
 				throw new ArgumentException("Must supply a valid name.", nameof(name));
@@ -58,15 +60,18 @@ namespace DD.CloudControl.Client
 			HttpRequest request = Requests.Network.CreateVlan.WithTemplateParameter("organizationId", organizationId);
 
 			HttpResponseMessage response = await
-				_httpClient.PostAsJsonAsync(request, new CreateVlan
-				{
-					Name = name,
-					Description = description,
-					NetworkDomainId = networkDomainId,
-					PrivateIPv4BaseAddress = privateIPv4BaseAddress,
-					PrivateIPv4PrefixSize = privateIPv4PrefixSize,
-					GatewayAddressing = gatewayAddressing
-				});
+				_httpClient.PostAsJsonAsync(request,
+					new CreateVlan
+					{
+						Name = name,
+						Description = description,
+						NetworkDomainId = networkDomainId,
+						PrivateIPv4BaseAddress = privateIPv4BaseAddress,
+						PrivateIPv4PrefixSize = privateIPv4PrefixSize,
+						GatewayAddressing = gatewayAddressing
+					},
+					cancellationToken
+				);
 			using (response)
 			{
 				ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
@@ -88,7 +93,7 @@ namespace DD.CloudControl.Client
 		/// 	The Id of the VLAN to retrieve.
 		/// </param>
 		/// <param name="cancellationToken">
-		/// 	An optional cancellation token that can be used to cancel the operation.
+		/// 	An optional cancellation token that can be used to cancel the request.
 		/// </param>
 		/// <returns>
 		/// 	A <see cref="Vlan"/> representing the VLAN, or <c>null</c> if no VLAN was found with the specified Id.
@@ -129,7 +134,7 @@ namespace DD.CloudControl.Client
 		/// 	An optional <see cref="Paging"/> configuration for the results.
 		/// </param>
 		/// <param name="cancellationToken">
-		/// 	An optional cancellation token that can be used to cancel the operation.
+		/// 	An optional cancellation token that can be used to cancel the request.
 		/// </param>
 		/// <returns>
 		/// 	A <see cref="Vlans"/> representing the page of results.

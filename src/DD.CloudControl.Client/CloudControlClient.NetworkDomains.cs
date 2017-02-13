@@ -1,5 +1,4 @@
 using HTTPlease;
-using HTTPlease.Formatters;
 using System;
 using System.Net.Http;
 using System.Threading;
@@ -30,10 +29,13 @@ namespace DD.CloudControl.Client
 		/// <param name="type">
 		/// 	The network domain type.
 		/// </param>
+		/// <param name="cancellationToken">
+		/// 	An optional cancellation token that can be used to cancel the request.
+		/// </param>
 		/// <returns>
 		/// 	The Id of the new network domain.
 		/// </returns>
-		public async Task<Guid> CreateNetworkDomain(string datacenterId, string name, string description, NetworkDomainType type)
+		public async Task<Guid> CreateNetworkDomain(string datacenterId, string name, string description, NetworkDomainType type, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (String.IsNullOrWhiteSpace(datacenterId))
 				throw new ArgumentException("Must supply a valid datacenter Id.", nameof(datacenterId));
@@ -48,13 +50,16 @@ namespace DD.CloudControl.Client
 			HttpRequest request = Requests.Network.CreateNetworkDomain.WithTemplateParameter("organizationId", organizationId);
 
 			HttpResponseMessage response = await
-				_httpClient.PostAsJsonAsync(request, new CreateNetworkDomain
-				{
-					Name = name,
-					Description = description,
-					Type = type,
-					DatacenterId = datacenterId
-				});
+				_httpClient.PostAsJsonAsync(request,
+					new CreateNetworkDomain
+					{
+						Name = name,
+						Description = description,
+						Type = type,
+						DatacenterId = datacenterId
+					},
+					cancellationToken
+				);
 			using (response)
 			{
 				ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
@@ -76,7 +81,7 @@ namespace DD.CloudControl.Client
 		/// 	The Id of the network domain to retrieve.
 		/// </param>
 		/// <param name="cancellationToken">
-		/// 	An optional cancellation token that can be used to cancel the operation.
+		/// 	An optional cancellation token that can be used to cancel the request.
 		/// </param>
 		/// <returns>
 		/// 	A <see cref="NetworkDomain"/> representing the network domain, or <c>null</c> if no network domain was found with the specified Id.
@@ -117,7 +122,7 @@ namespace DD.CloudControl.Client
 		/// 	The Id of the target datacenter (e.g. AU10, NA9).
 		/// </param>
 		/// <param name="cancellationToken">
-		/// 	An optional cancellation token that can be used to cancel the operation.
+		/// 	An optional cancellation token that can be used to cancel the request.
 		/// </param>
 		/// <returns>
 		/// 	A <see cref="NetworkDomains"/> representing the page of results.
