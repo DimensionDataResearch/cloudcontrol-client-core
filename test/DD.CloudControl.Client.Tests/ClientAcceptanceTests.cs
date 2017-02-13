@@ -14,9 +14,9 @@ namespace DD.CloudControl.Client.Tests
 	/// <remarks>
 	/// 	For the most part, tests use HTTPlease testability features to mock out the CloudControl API, but these tests will act as a placeholder for now.
 	/// </remarks>
-    public class ClientAcceptanceTests
+	public class ClientAcceptanceTests
 		: IClassFixture<ClientCredentials>
-    {
+	{
 		/// <summary>
 		/// 	Create a client acceptance-test suite.
 		/// </summary>
@@ -39,9 +39,9 @@ namespace DD.CloudControl.Client.Tests
 		/// <summary>
 		/// 	Get the current user's account details.
 		/// </summary>
-        [AcceptanceFact]
-        public async Task Client_GetAccount()
-        {
+		[AcceptanceFact]
+		public async Task Client_GetAccount()
+		{
 			CloudControlClient client = CloudControlClient.Create(
 				baseUri: new Uri("https://api-au.dimensiondata.com/"),
 				userName: Credentials.User,
@@ -54,14 +54,14 @@ namespace DD.CloudControl.Client.Tests
 				Assert.NotNull(account);
 				Assert.Equal(Credentials.User, account.UserName);
 			}
-        }
+		}
 
 		/// <summary>
 		/// 	List network domains in the "AU9" (Sydney) datacenter.
 		/// </summary>
-        [AcceptanceFact]
-        public async Task Client_ListNetworkDomains_AU9()
-        {
+		[AcceptanceFact]
+		public async Task Client_ListNetworkDomains_AU9()
+		{
 			CloudControlClient client = CloudControlClient.Create(
 				baseUri: new Uri("https://api-au.dimensiondata.com/"),
 				userName: Credentials.User,
@@ -91,7 +91,7 @@ namespace DD.CloudControl.Client.Tests
 
 				Assert.Equal(expectedTotalCount, totalCount);
 			}
-        }
+		}
 
 		/// <summary>
 		/// 	Create a new client for the CloudControl API.
@@ -104,5 +104,5 @@ namespace DD.CloudControl.Client.Tests
 			userName: Credentials.User,
 			password: Credentials.Password
 		);
-    }
+	}
 }

@@ -7,10 +7,10 @@ namespace DD.CloudControl.Client.Tests
 {
 	using Models.Directory;
 
-    /// <summary>
-    /// 	Tests for the client's account APIs.
-    /// </summary>
-    public class AccountTests
+	/// <summary>
+	/// 	Tests for the client's account APIs.
+	/// </summary>
+	public class AccountTests
 		: ClientTestBase
 	{
 		/// <summary>
@@ -55,35 +55,35 @@ namespace DD.CloudControl.Client.Tests
 		/// </summary>
 		const string MyAccountXml = @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
 <ns8:Account xmlns=""http://oec.api.opsource.net/schemas/network"" xmlns:ns2=""http://oec.api.opsource.net/schemas/vip"" xmlns:ns4=""http://oec.api.opsource.net/schemas/organization"" xmlns:ns3=""http://oec.api.opsource.net/schemas/server"" xmlns:ns6=""http://oec.api.opsource.net/schemas/multigeo"" xmlns:ns5=""http://oec.api.opsource.net/schemas/datacenter"" xmlns:ns8=""http://oec.api.opsource.net/schemas/directory"" xmlns:ns7=""http://oec.api.opsource.net/schemas/general"" xmlns:ns13=""http://oec.api.opsource.net/schemas/support"" xmlns:ns9=""http://oec.api.opsource.net/schemas/serverbootstrap"" xmlns:ns12=""http://oec.api.opsource.net/schemas/storage"" xmlns:ns11=""http://oec.api.opsource.net/schemas/whitelabel"" xmlns:ns10=""http://oec.api.opsource.net/schemas/backup"" xmlns:ns16=""http://oec.api.opsource.net/schemas/manualimport"" xmlns:ns15=""http://oec.api.opsource.net/schemas/reset"" xmlns:ns14=""http://oec.api.opsource.net/schemas/admin"">
-    <ns8:userName>test_user</ns8:userName>
-    <ns8:fullName>Test User</ns8:fullName>
-    <ns8:firstName>Test</ns8:firstName>
-    <ns8:lastName>User</ns8:lastName>
-    <ns8:emailAddress>test.user@mycompany.com</ns8:emailAddress>
-    <ns8:department>Department 1</ns8:department>
-    <ns8:customDefined1></ns8:customDefined1>
-    <ns8:customDefined2></ns8:customDefined2>
-    <ns8:orgId>22edd5e3-a235-4d3c-b5b2-d2843aa77d41</ns8:orgId>
-    <ns8:roles>
-        <ns8:role>
-            <ns8:name>server</ns8:name>
-        </ns8:role>
-        <ns8:role>
-            <ns8:name>tag</ns8:name>
-        </ns8:role>
-        <ns8:role>
-            <ns8:name>reports</ns8:name>
-        </ns8:role>
-        <ns8:role>
-            <ns8:name>backup</ns8:name>
-        </ns8:role>
-        <ns8:role>
-            <ns8:name>network</ns8:name>
-        </ns8:role>
-        <ns8:role>
-            <ns8:name>create image</ns8:name>
-        </ns8:role>
-    </ns8:roles>
+	<ns8:userName>test_user</ns8:userName>
+	<ns8:fullName>Test User</ns8:fullName>
+	<ns8:firstName>Test</ns8:firstName>
+	<ns8:lastName>User</ns8:lastName>
+	<ns8:emailAddress>test.user@mycompany.com</ns8:emailAddress>
+	<ns8:department>Department 1</ns8:department>
+	<ns8:customDefined1></ns8:customDefined1>
+	<ns8:customDefined2></ns8:customDefined2>
+	<ns8:orgId>22edd5e3-a235-4d3c-b5b2-d2843aa77d41</ns8:orgId>
+	<ns8:roles>
+		<ns8:role>
+			<ns8:name>server</ns8:name>
+		</ns8:role>
+		<ns8:role>
+			<ns8:name>tag</ns8:name>
+		</ns8:role>
+		<ns8:role>
+			<ns8:name>reports</ns8:name>
+		</ns8:role>
+		<ns8:role>
+			<ns8:name>backup</ns8:name>
+		</ns8:role>
+		<ns8:role>
+			<ns8:name>network</ns8:name>
+		</ns8:role>
+		<ns8:role>
+			<ns8:name>create image</ns8:name>
+		</ns8:role>
+	</ns8:roles>
 </ns8:Account>";
 	}
 }

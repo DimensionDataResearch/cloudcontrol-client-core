@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 namespace DD.CloudControl.Client.Models.Directory
 {
 	/// <summary>
-	///     Well-known CloudControl role types.
+	///	 Well-known CloudControl role types.
 	/// </summary>
 	[XmlRoot("roleType", Namespace = XmlNamespaces.Directory)]
 	public enum RoleType
@@ -59,7 +59,7 @@ namespace DD.CloudControl.Client.Models.Directory
 		Reports,
 
 		/// <summary>
-		///     The tag role.
+		///	 The tag role.
 		/// </summary>
 		[XmlEnum("tag")]
 		Tag

@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 namespace DD.CloudControl.Client.Models.Directory
 {
 	/// <summary>
-	///     Represents a CloudControl access-control role.
+	///	 Represents a CloudControl access-control role.
 	/// </summary>
 	[XmlRoot("Role", Namespace = XmlNamespaces.Directory)]
 	public class Role
@@ -22,7 +22,7 @@ namespace DD.CloudControl.Client.Models.Directory
 		public string Name { get; set; }
 
 		/// <summary>
-		///     A <see cref="RoleType"/> value representing the role.
+		///	 A <see cref="RoleType"/> value representing the role.
 		/// </summary>
 		public RoleType RoleType
 		{

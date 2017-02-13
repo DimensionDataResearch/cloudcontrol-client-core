@@ -6,14 +6,14 @@ using Xunit;
 
 namespace DD.CloudControl.Client.Tests
 {
-    using Models.Network;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
+	using Models.Network;
+	using Newtonsoft.Json;
+	using Newtonsoft.Json.Linq;
 
-    /// <summary>
-    /// 	Tests for the client's network domain APIs.
-    /// </summary>
-    public class NetworkDomainTests
+	/// <summary>
+	/// 	Tests for the client's network domain APIs.
+	/// </summary>
+	public class NetworkDomainTests
 		: ClientTestBase
 	{
 		/// <summary>

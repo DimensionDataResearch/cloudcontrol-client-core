@@ -8,8 +8,8 @@ namespace DD.CloudControl.Client.Requests
 	public static class Network
 	{
 		/// <summary>
-        ///		Base request definition for network API requests. 
-        /// </summary>
+		///		Base request definition for network API requests. 
+		/// </summary>
 		static HttpRequest Base = CloudControl.BaseRequestV24.WithRelativeUri("{organizationId}/network");
 
 		/// <summary>

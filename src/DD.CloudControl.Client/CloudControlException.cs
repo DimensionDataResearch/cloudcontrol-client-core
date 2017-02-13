@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DD.CloudControl.Client
 {
-    using Models;
+	using Models;
 
 	/// <summary>
 	/// 	Exception raised when the CloudControl client encounters an error.

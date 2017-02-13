@@ -8,27 +8,27 @@ using System.Threading.Tasks;
 
 namespace DD.CloudControl.Client
 {
-    using Models.Directory;
+	using Models.Directory;
 
-    /// <summary>
-    ///		The CloudControl API client. 
-    /// </summary>
-    public sealed partial class CloudControlClient
+	/// <summary>
+	///		The CloudControl API client. 
+	/// </summary>
+	public sealed partial class CloudControlClient
 		: IDisposable
 	{
 		/// <summary>
-        ///		Factory for <see cref="HttpClient"/>s used by the <see cref="CloudControlClient"/>. 
-        /// </summary>
+		///		Factory for <see cref="HttpClient"/>s used by the <see cref="CloudControlClient"/>. 
+		/// </summary>
 		static readonly ClientBuilder HttpClientBuilder = new ClientBuilder();
 
 		/// <summary>
-        ///		 The HTTP client used to communicate with the CloudControl API.
-        /// </summary>
+		///		 The HTTP client used to communicate with the CloudControl API.
+		/// </summary>
 		readonly HttpClient	_httpClient;
 
 		/// <summary>
-        ///		Cached user account information. 
-        /// </summary>
+		///		Cached user account information. 
+		/// </summary>
 		UserAccount			_account;
 
 		/// <summary>
@@ -40,9 +40,9 @@ namespace DD.CloudControl.Client
 		int					_isDisposed;
 
 		/// <summary>
-        ///		Create a new <see cref="CloudControlClient"/>.
-        /// </summary>
-        /// <param name="httpClient">
+		///		Create a new <see cref="CloudControlClient"/>.
+		/// </summary>
+		/// <param name="httpClient">
 		/// 	The HTTP client used to communicate with the CloudControl API.
 		/// 
 		/// 	Disposing the client will dispose this HTTP client.
@@ -93,12 +93,12 @@ namespace DD.CloudControl.Client
 		}
 
 		/// <summary>
-        ///		Retrieve the user's account information. 
-        /// </summary>
-        /// <param name="cancellationToken">
+		///		Retrieve the user's account information. 
+		/// </summary>
+		/// <param name="cancellationToken">
 		/// 	An optional <see cref="CancellationToken"/> that can be used to cancel the request.
 		/// </param>
-        /// <returns>
+		/// <returns>
 		/// 	The user account information.
 		/// </returns>
 		public Task<UserAccount> GetAccount(CancellationToken cancellationToken = default(CancellationToken))
@@ -107,15 +107,15 @@ namespace DD.CloudControl.Client
 		}
 
 		/// <summary>
-        ///		Retrieve the user's account information. 
-        /// </summary>
-        /// <param name="refresh">
+		///		Retrieve the user's account information. 
+		/// </summary>
+		/// <param name="refresh">
 		/// 	Don't use cached account information.
 		/// </param>
-        /// <param name="cancellationToken">
+		/// <param name="cancellationToken">
 		/// 	An optional <see cref="CancellationToken"/> that can be used to cancel the request.
 		/// </param>
-        /// <returns>
+		/// <returns>
 		/// 	The user account information.
 		/// </returns>
 		public async Task<UserAccount> GetAccount(bool refresh, CancellationToken cancellationToken = default(CancellationToken))
@@ -133,12 +133,12 @@ namespace DD.CloudControl.Client
 		}
 
 		/// <summary>
-        ///		Retrieve the user's organisation Id. 
-        /// </summary>
-        /// <param name="cancellationToken">
+		///		Retrieve the user's organisation Id. 
+		/// </summary>
+		/// <param name="cancellationToken">
 		/// 	An optional <see cref="CancellationToken"/> that can be used to cancel the request.
 		/// </param>
-        /// <returns>
+		/// <returns>
 		/// 	The user's organisation Id.
 		/// </returns>
 		async Task<Guid> GetOrganizationId(CancellationToken cancellationToken = default(CancellationToken))
@@ -149,12 +149,12 @@ namespace DD.CloudControl.Client
 		}
 
 		/// <summary>
-        ///		 Create a new <see cref="CloudControlClient"/>.
-        /// </summary>
-        /// <param name="baseUri">
+		///		 Create a new <see cref="CloudControlClient"/>.
+		/// </summary>
+		/// <param name="baseUri">
 		/// 	The base URI for the CloudControl API.
 		/// </param>
-        /// <param name="userName">
+		/// <param name="userName">
 		/// 	The CloudControl user name.
 		/// </param>
 		/// <param name="password">

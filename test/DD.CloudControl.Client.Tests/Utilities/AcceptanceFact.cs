@@ -66,12 +66,12 @@ namespace DD.CloudControl.Client.Tests.Utilities
 		/// <returns>
 		/// 	A sequence of 0 or more test cases.
 		/// </returns>
-        public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
-        {
+		public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
+		{
 			if (!IsAccTestEnvironmentVariableDefined)
 				yield break;
 
 			yield return new XunitTestCase(_diagnosticMessageSink, TestMethodDisplay.ClassAndMethod, testMethod);
-        }
-    }
+		}
+	}
 }

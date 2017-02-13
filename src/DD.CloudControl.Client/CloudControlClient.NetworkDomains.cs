@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace DD.CloudControl.Client
 {
-    using Models;
-    using Models.Network;
+	using Models;
+	using Models.Network;
 
 	/// <summary>
-    ///		The CloudControl API client. 
-    /// </summary>
+	///		The CloudControl API client. 
+	/// </summary>
 	public partial class CloudControlClient
 	{
 		/// <summary>
