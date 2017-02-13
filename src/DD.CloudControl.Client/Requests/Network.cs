@@ -28,6 +28,11 @@ namespace DD.CloudControl.Client.Requests
 		public static HttpRequest ListNetworkDomains = Base.WithRelativeUri("networkDomain?datacenterId={datacenterId?}&pageNumber={pageNumber?}&pageSize={pageSize?}");
 
 		/// <summary>
+		/// 	Request definition for creating a new VLAN.
+		/// </summary>
+		public static HttpRequest CreateVlan = Base.WithRelativeUri("deployVlan");
+
+		/// <summary>
 		/// 	Request definition for retrieving a specific VLAN by Id.
 		/// </summary>
 		public static HttpRequest GetVlanById = Base.WithRelativeUri("vlan/{vlanId}");

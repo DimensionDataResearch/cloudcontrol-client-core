@@ -39,7 +39,7 @@ namespace DD.CloudControl.Client
 				throw new ArgumentException("Must supply a valid datacenter Id.", nameof(datacenterId));
 
 			if (String.IsNullOrWhiteSpace(name))
-				throw new ArgumentException("Must supply a valid name.", nameof(datacenterId));
+				throw new ArgumentException("Must supply a valid name.", nameof(name));
 
 			if (description == null)
 				description = "";

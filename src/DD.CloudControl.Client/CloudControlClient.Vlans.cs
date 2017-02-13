@@ -1,4 +1,5 @@
 using HTTPlease;
+using HTTPlease.Formatters;
 using System;
 using System.Net.Http;
 using System.Threading;
@@ -14,6 +15,72 @@ namespace DD.CloudControl.Client
     /// </summary>
 	public partial class CloudControlClient
 	{
+		/// <summary>
+		/// 	Create a new VLAN.
+		/// </summary>
+		/// <param name="name">
+		/// 	The name of the new VLAN.
+		/// </param>
+		/// <param name="description">
+		/// 	The description (if any) for the new VLAN.
+		/// </param>
+		/// <param name="networkDomainId">
+		/// 	The Id of the network domain in which the VLAN will be created.
+		/// </param>
+		/// <param name="privateIPv4BaseAddress">
+		/// 	The base address of the VLAN's private IPv4 network.
+		/// </param>
+		/// <param name="privateIPv4PrefixSize">
+		/// 	The optional size, in bits, of the VLAN's private IPv4 network prefix.
+		/// 	
+		///		Default is 24 (i.e. a class C network).
+		/// </param>
+		/// <param name="gatewayAddressing">
+		/// 	The gateway addressing style to use for the new VLAN.
+		/// 	
+		///		Default is <see cref="VlanGatewayAddressing.Low"/>.
+		/// </param>
+		/// <returns>
+		/// 	The Id of the new VLAN.
+		/// </returns>
+		public async Task<Guid> CreateVlan(string name, string description, string networkDomainId, string privateIPv4BaseAddress, int privateIPv4PrefixSize = 24, VlanGatewayAddressing gatewayAddressing = VlanGatewayAddressing.Low)
+		{
+			if (String.IsNullOrWhiteSpace(name))
+				throw new ArgumentException("Must supply a valid name.", nameof(name));
+
+			if (description == null)
+				description = "";
+
+			if (String.IsNullOrWhiteSpace(networkDomainId))
+				throw new ArgumentException("Must supply a valid network domain Id.", nameof(networkDomainId));
+
+			Guid organizationId = await GetOrganizationId();
+			HttpRequest request = Requests.Network.CreateVlan.WithTemplateParameter("organizationId", organizationId);
+
+			HttpResponseMessage response = await
+				_httpClient.PostAsJsonAsync(request, new CreateVlan
+				{
+					Name = name,
+					Description = description,
+					NetworkDomainId = networkDomainId,
+					PrivateIPv4BaseAddress = privateIPv4BaseAddress,
+					PrivateIPv4PrefixSize = privateIPv4PrefixSize,
+					GatewayAddressing = gatewayAddressing
+				});
+			using (response)
+			{
+				ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
+				if (apiResponse.ResponseCode != ApiResponseCodeV2.InProgress)
+					throw CloudControlException.FromApiV2Response(apiResponse, response.StatusCode);
+
+				string vlanId = apiResponse.InfoMessages.GetByName("vlanId");
+				if (String.IsNullOrWhiteSpace(vlanId))
+					throw new CloudControlException("Received an unexpected response from the CloudControl API (missing 'vlanId' message).");
+
+				return new Guid(vlanId);
+			}
+		}
+
 		/// <summary>
 		/// 	Retrieve a specific VLAN by Id.
 		/// </summary>
