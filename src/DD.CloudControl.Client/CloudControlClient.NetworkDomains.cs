@@ -157,9 +157,6 @@ namespace DD.CloudControl.Client
 		/// <param name="cancellationToken">
 		/// 	An optional cancellation token that can be used to cancel the request.
 		/// </param>
-		/// <returns>
-		/// 	The CloudControl API response.
-		/// </returns>
 		/// <remarks>
 		/// 	Deletion of network domains is synchronous.
 		/// </remarks>
@@ -175,10 +172,7 @@ namespace DD.CloudControl.Client
 
 			HttpResponseMessage response = await
 				_httpClient.PostAsJsonAsync(request,
-					new DeleteResource
-					{
-						Id = id
-					},
+					new DeleteResource { Id = id },
 					cancellationToken
 				);
 			using (response)

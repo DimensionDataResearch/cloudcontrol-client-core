@@ -159,5 +159,40 @@ namespace DD.CloudControl.Client
 				return await response.ReadContentAsAsync<Vlans>();
 			}
 		}
+
+		/// <summary>
+		/// 	Delete an MCP 2.0 VLAN.
+		/// </summary>
+		/// <param name="id">
+		/// 	The Id of the VLAN to delete.
+		/// </param>
+		/// <param name="cancellationToken">
+		/// 	An optional cancellation token that can be used to cancel the request.
+		/// </param>
+		/// <remarks>
+		/// 	Deletion of VLANs is asynchronous.
+		/// </remarks>
+		public async Task DeleteVlan(string id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			Guid organizationId = await GetOrganizationId();
+
+			HttpRequest request = Requests.Network.DeleteVlan
+				.WithTemplateParameters(new
+				{
+					organizationId
+				});
+
+			HttpResponseMessage response = await
+				_httpClient.PostAsJsonAsync(request,
+					new DeleteResource { Id = id },
+					cancellationToken
+				);
+			using (response)
+			{
+				ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
+				if (apiResponse.ResponseCode != ApiResponseCodeV2.Success)
+					throw CloudControlException.FromApiV2Response(apiResponse, response.StatusCode);
+			}
+		}
 	}
 }

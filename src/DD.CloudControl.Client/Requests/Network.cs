@@ -38,6 +38,11 @@ namespace DD.CloudControl.Client.Requests
 		public static HttpRequest CreateVlan = Base.WithRelativeUri("deployVlan");
 
 		/// <summary>
+		/// 	Request definition for deleting a VLAN.
+		/// </summary>
+		public static HttpRequest DeleteVlan = Base.WithRelativeUri("deleteVlan");
+
+		/// <summary>
 		/// 	Request definition for retrieving a specific VLAN by Id.
 		/// </summary>
 		public static HttpRequest GetVlanById = Base.WithRelativeUri("vlan/{vlanId}");
