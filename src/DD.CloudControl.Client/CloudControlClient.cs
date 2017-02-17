@@ -168,10 +168,35 @@ namespace DD.CloudControl.Client
 			if (baseUri == null)
 				throw new ArgumentNullException(nameof(baseUri));
 
+			return Create(baseUri,
+				credentials: new NetworkCredential(userName, password)
+			);
+		}
+
+		/// <summary>
+		///		 Create a new <see cref="CloudControlClient"/>.
+		/// </summary>
+		/// <param name="baseUri">
+		/// 	The base URI for the CloudControl API.
+		/// </param>
+		/// <param name="credentials">
+		/// 	The network credentials used to authenticate to CloudControl.
+		/// </param>
+		/// <returns>
+		/// 	The configured <see cref="CloudControlClient"/>.
+		/// </returns>
+		public static CloudControlClient Create(Uri baseUri, NetworkCredential credentials)
+		{
+			if (baseUri == null)
+				throw new ArgumentNullException(nameof(baseUri));
+
+			if (credentials == null)
+				throw new ArgumentNullException(nameof(credentials));
+
 			return new CloudControlClient(
 				HttpClientBuilder.CreateClient(baseUri, new HttpClientHandler
 				{
-					Credentials = new NetworkCredential(userName, password),
+					Credentials = credentials,
 					PreAuthenticate = true
 				})
 			);
