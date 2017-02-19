@@ -24,7 +24,7 @@ namespace DD.CloudControl.Client.Models.Network
 		/// <summary>
 		/// 	The Id of the datacenter (e.g. AU10, NA9) in which the network domain is located.
 		/// </summary>
-		[JsonProperty("datacenter")]
+		[JsonProperty("datacenterId")]
 		public string DatacenterId { get; set; }
 
 		/// <summary>

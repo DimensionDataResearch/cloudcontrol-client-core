@@ -43,6 +43,9 @@ namespace DD.CloudControl.Client.Tests
 				Assert.NotNull(networkDomains);
 				Assert.Equal(2, networkDomains.TotalCount);
 				Assert.Equal(2, networkDomains.Items.Count);
+
+				Assert.Equal("AU9", networkDomains.Items[0].DatacenterId);
+				Assert.Equal("AU9", networkDomains.Items[1].DatacenterId);
 			}
 		}
 
