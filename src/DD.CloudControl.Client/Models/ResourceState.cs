@@ -61,6 +61,15 @@ namespace DD.CloudControl.Client.Models
 		///		Resource state is invalid; please contact support to resolve.
 		/// </summary>
 		[EnumMember(Value = "REQUIRES_SUPPORT")]
-		RequiresSupport = 8
+		RequiresSupport = 8,
+
+		/// <summary>
+		///		Resource has been deleted.
+		/// </summary>
+		/// <remarks>
+		///		This is a pseudo-value; it does not correspond to a status returned by CloudControl.
+		/// 	Instead, it means the resource was not found with the specified Id.
+		/// </remarks>
+		Deleted = 10
 	}
 }
