@@ -31,7 +31,15 @@ namespace DD.CloudControl.Client
 		/// <param name="cancellationToken">
 		/// 	An optional cancellation token that can be used to cancel the request.
 		/// </param>
-		/// <returns></returns>
+		/// <returns>
+		/// 	The resource (or <c>null</c> if the resource has been deleted).
+		/// </returns>
+		/// <exception cref="TimeoutException">
+		/// 	The timeout period elapsed before the resource reached the target state.
+		/// </exception>
+		/// <exception cref="CloudControlException">
+		/// 	The target resource was not found with the specified Id, and <paramref name="targetState"/> is not <see cref="ResourceState.Deleted"/>
+		/// </exception>
 		public async Task<TResource> WaitForState<TResource>(Guid resourceId, ResourceState targetState, TimeSpan timeout, CancellationToken cancellationToken = default(CancellationToken))
 			where TResource : Resource
 		{
@@ -42,7 +50,7 @@ namespace DD.CloudControl.Client
 			while (resource != null && resource.State != targetState)
 			{
 				if (stopwatch.Elapsed > timeout)
-					throw new CloudControlException($"Timed out after waiting {timeout.TotalSeconds} seconds for {typeof(TResource).Name} '{resourceId}' to reach state '{targetState}'.");				
+					throw new TimeoutException($"Timed out after waiting {timeout.TotalSeconds} seconds for {typeof(TResource).Name} '{resourceId}' to reach state '{targetState}'.");
 
 				resource = await loader(resourceId, cancellationToken);
 			}
