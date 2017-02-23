@@ -18,6 +18,11 @@ namespace DD.CloudControl.Client.Requests
 		public static HttpRequest CreateNetworkDomain = Base.WithRelativeUri("deployNetworkDomain");
 
 		/// <summary>
+		/// 	Request definition for updating an existing network domain.
+		/// </summary>
+		public static HttpRequest EditNetworkDomain = Base.WithRelativeUri("editNetworkDomain");
+
+		/// <summary>
 		/// 	Request definition for deleting a new network domain.
 		/// </summary>
 		public static HttpRequest DeleteNetworkDomain = Base.WithRelativeUri("deleteNetworkDomain");

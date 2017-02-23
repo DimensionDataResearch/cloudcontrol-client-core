@@ -52,6 +52,54 @@ namespace DD.CloudControl.Client.Models
 		/// </summary>
 		[JsonProperty("error", ObjectCreationHandling = ObjectCreationHandling.Reuse)]
 		public List<ApiMessageV2> ErrorMessages { get; } = new List<ApiMessageV2>();
+
+		/// <summary>
+		/// 	Ensure that the response indicates success.
+		/// </summary>
+		/// <param name="allowInProgress">
+		/// 	Treat an in-progress response as successful?
+		/// 
+		/// 	Default is <c>true</c>.
+		/// </param>
+		/// <returns>
+		/// 	<c>true</c>, if the response indicates success; otherwise, <c>false</c>.
+		/// </returns>
+		public bool IsSuccess(bool allowInProgress = true)
+		{
+			switch (ResponseCode)
+			{
+				case ApiResponseCodeV2.Success:
+				case ApiResponseCodeV2.Ok:
+				{
+					return true;
+				}
+				case ApiResponseCodeV2.InProgress:
+				{
+					return allowInProgress;
+				}
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// 	Ensure that the response indicates success.
+		/// </summary>
+		/// <param name="allowInProgress">
+		/// 	Treat an in-progress response as successful?
+		/// 
+		/// 	Default is <c>true</c>.
+		/// </param>
+		/// <exception cref="CloudControlException">
+		/// 	The response does not indicate success.
+		/// </exception>
+		public void EnsureSuccess(bool allowInProgress = true)
+		{
+			if (IsSuccess(allowInProgress))
+				return;
+
+			throw CloudControlException.FromApiV2Response(this);
+		}
 	}
 
 	/// <summary>
@@ -107,7 +155,13 @@ namespace DD.CloudControl.Client.Models
 		/// 	The specified resource was not found.
 		/// </summary>
 		[EnumMember(Value = "RESOURCE_NOT_FOUND")]
-		ResourceNotFound = 4
+		ResourceNotFound = 4,
+
+		/// <summary>
+		/// 	The operation completed successfully.
+		/// </summary>
+		[EnumMember(Value = "OK")]
+		Ok = 100
 	}
 
 	/// <summary>

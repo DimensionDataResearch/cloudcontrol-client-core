@@ -93,6 +93,19 @@ namespace DD.CloudControl.Client
 		}
 
 		/// <summary>
+		/// 	The base address for the Cloud Control API.
+		/// </summary>
+		public Uri BaseAddress
+		{
+			get
+			{
+				CheckDisposed();
+
+				return _httpClient.BaseAddress;
+			}
+		}
+
+		/// <summary>
 		///		Retrieve the user's account information. 
 		/// </summary>
 		/// <param name="cancellationToken">

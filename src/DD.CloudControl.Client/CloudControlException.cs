@@ -84,10 +84,31 @@ namespace DD.CloudControl.Client
 			if (apiResponseV2 == null)
 				throw new ArgumentNullException(nameof(apiResponseV2));
 
+			if (statusCode == 0)
+				return FromApiV2Response(apiResponseV2);
+
 			return new CloudControlException($"The CloudControl API returned an error response (HTTP {statusCode}): [{apiResponseV2.ResponseCode}] {apiResponseV2.Message}.")
 			{
 				ResponseCode = apiResponseV2.ResponseCode.ToString(),
 				StatusCode = statusCode
+			};
+		}
+
+		/// <summary>
+		/// 	Create a <see cref="CloudControlException"/> from a v2 API response.
+		/// </summary>
+		/// <param name="apiResponseV2">
+		/// 	The API response.
+		/// </param>
+		/// <returns>
+		/// 	The configured <see cref="CloudControlException"/>.
+		/// </returns>
+		internal static CloudControlException FromApiV2Response(ApiResponseV2 apiResponseV2)
+		{
+			return new CloudControlException($"The CloudControl API returned an error response: [{apiResponseV2.ResponseCode}] {apiResponseV2.Message}.")
+			{
+				ResponseCode = apiResponseV2.ResponseCode.ToString(),
+				StatusCode = 0
 			};
 		}
 	}

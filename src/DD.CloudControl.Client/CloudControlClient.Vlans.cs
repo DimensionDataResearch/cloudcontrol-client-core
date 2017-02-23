@@ -98,7 +98,7 @@ namespace DD.CloudControl.Client
 		/// <returns>
 		/// 	A <see cref="Vlan"/> representing the VLAN, or <c>null</c> if no VLAN was found with the specified Id.
 		/// </returns>
-		public async Task<Vlan> GetVlan(string vlanId, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task<Vlan> GetVlan(Guid vlanId, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			Guid organizationId = await GetOrganizationId();
 

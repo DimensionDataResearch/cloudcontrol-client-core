@@ -15,66 +15,6 @@ namespace DD.CloudControl.Client
 	public partial class CloudControlClient
 	{
 		/// <summary>
-		/// 	Create a new network domain.
-		/// </summary>
-		/// <param name="datacenterId">
-		/// 	The Id of the target datacenter (e.g. AU10, NA9).
-		/// </param>
-		/// <param name="name">
-		/// 	The name of the new network domain.
-		/// </param>
-		/// <param name="description">
-		/// 	The description (if any) for the new network domain.
-		/// </param>
-		/// <param name="type">
-		/// 	The network domain type.
-		/// </param>
-		/// <param name="cancellationToken">
-		/// 	An optional cancellation token that can be used to cancel the request.
-		/// </param>
-		/// <returns>
-		/// 	The Id of the new network domain.
-		/// </returns>
-		public async Task<Guid> CreateNetworkDomain(string datacenterId, string name, string description, NetworkDomainType type, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			if (String.IsNullOrWhiteSpace(datacenterId))
-				throw new ArgumentException("Must supply a valid datacenter Id.", nameof(datacenterId));
-
-			if (String.IsNullOrWhiteSpace(name))
-				throw new ArgumentException("Must supply a valid name.", nameof(name));
-
-			if (description == null)
-				description = "";
-
-			Guid organizationId = await GetOrganizationId();
-			HttpRequest request = Requests.Network.CreateNetworkDomain.WithTemplateParameter("organizationId", organizationId);
-
-			HttpResponseMessage response = await
-				_httpClient.PostAsJsonAsync(request,
-					new CreateNetworkDomain
-					{
-						Name = name,
-						Description = description,
-						Type = type,
-						DatacenterId = datacenterId
-					},
-					cancellationToken
-				);
-			using (response)
-			{
-				ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
-				if (apiResponse.ResponseCode != ApiResponseCodeV2.InProgress)
-					throw CloudControlException.FromApiV2Response(apiResponse, response.StatusCode);
-
-				string networkDomainId = apiResponse.InfoMessages.GetByName("networkDomainId");
-				if (String.IsNullOrWhiteSpace(networkDomainId))
-					throw new CloudControlException("Received an unexpected response from the CloudControl API (missing 'networkDomainId' message).");
-
-				return new Guid(networkDomainId);
-			}
-		}
-
-		/// <summary>
 		/// 	Retrieve a specific network domain by Id.
 		/// </summary>
 		/// <param name="networkDomainId">
@@ -86,7 +26,7 @@ namespace DD.CloudControl.Client
 		/// <returns>
 		/// 	A <see cref="NetworkDomain"/> representing the network domain, or <c>null</c> if no network domain was found with the specified Id.
 		/// </returns>
-		public async Task<NetworkDomain> GetNetworkDomain(string networkDomainId, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task<NetworkDomain> GetNetworkDomain(Guid networkDomainId, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			Guid organizationId = await GetOrganizationId();
 
@@ -183,6 +123,103 @@ namespace DD.CloudControl.Client
 					throw await CloudControlException.FromApiV2Response(response);
 
 				return await response.ReadContentAsAsync<NetworkDomains>();
+			}
+		}
+
+		/// <summary>
+		/// 	Create a new network domain.
+		/// </summary>
+		/// <param name="datacenterId">
+		/// 	The Id of the target datacenter (e.g. AU10, NA9).
+		/// </param>
+		/// <param name="name">
+		/// 	The name of the new network domain.
+		/// </param>
+		/// <param name="description">
+		/// 	The description (if any) for the new network domain.
+		/// </param>
+		/// <param name="type">
+		/// 	The network domain type.
+		/// </param>
+		/// <param name="cancellationToken">
+		/// 	An optional cancellation token that can be used to cancel the request.
+		/// </param>
+		/// <returns>
+		/// 	The Id of the new network domain.
+		/// </returns>
+		public async Task<Guid> CreateNetworkDomain(string datacenterId, string name, string description, NetworkDomainType type, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			if (String.IsNullOrWhiteSpace(datacenterId))
+				throw new ArgumentException("Must supply a valid datacenter Id.", nameof(datacenterId));
+
+			if (String.IsNullOrWhiteSpace(name))
+				throw new ArgumentException("Must supply a valid name.", nameof(name));
+
+			if (description == null)
+				description = "";
+
+			Guid organizationId = await GetOrganizationId();
+			HttpRequest request = Requests.Network.CreateNetworkDomain.WithTemplateParameter("organizationId", organizationId);
+
+			HttpResponseMessage response = await
+				_httpClient.PostAsJsonAsync(request,
+					new CreateNetworkDomain
+					{
+						Name = name,
+						Description = description,
+						Type = type,
+						DatacenterId = datacenterId
+					},
+					cancellationToken
+				);
+			using (response)
+			{
+				ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
+				if (apiResponse.ResponseCode != ApiResponseCodeV2.InProgress)
+					throw CloudControlException.FromApiV2Response(apiResponse, response.StatusCode);
+
+				string networkDomainId = apiResponse.InfoMessages.GetByName("networkDomainId");
+				if (String.IsNullOrWhiteSpace(networkDomainId))
+					throw new CloudControlException("Received an unexpected response from the CloudControl API (missing 'networkDomainId' message).");
+
+				return new Guid(networkDomainId);
+			}
+		}
+
+		/// <summary>
+		/// 	Update an existing network domain.
+		/// </summary>
+		/// <param name="networkDomain">
+		/// 	The network domain to update.
+		/// </param>
+		/// <param name="cancellationToken">
+		/// 	An optional cancellation token that can be used to cancel the request.
+		/// </param>
+		/// <returns>
+		/// 	The API response from CloudControl.
+		/// </returns>
+		public async Task<ApiResponseV2> EditNetworkDomain(NetworkDomain networkDomain, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			if (networkDomain == null)
+				throw new ArgumentNullException(nameof(networkDomain));
+
+			Guid organizationId = await GetOrganizationId();
+			HttpRequest request = Requests.Network.EditNetworkDomain.WithTemplateParameter("organizationId", organizationId);
+
+			HttpResponseMessage response = await
+				_httpClient.PostAsJsonAsync(request,
+					new EditNetworkDomain
+					{
+						Id = networkDomain.Id,
+						Name = networkDomain.Name,
+						Description = networkDomain.Description,
+						Type = networkDomain.Type
+					},
+					cancellationToken
+				);
+			using (response)
+			{
+				return await response.ReadContentAsApiResponseV2();
 			}
 		}
 
