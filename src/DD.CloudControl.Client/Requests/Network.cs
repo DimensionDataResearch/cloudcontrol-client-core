@@ -48,6 +48,16 @@ namespace DD.CloudControl.Client.Requests
 		public static HttpRequest CreateVlan = Base.WithRelativeUri("deployVlan");
 
 		/// <summary>
+		/// 	Request definition for updating an existing VLAN.
+		/// </summary>
+		public static HttpRequest EditVlan = Base.WithRelativeUri("editVlan");
+
+		/// <summary>
+		/// 	Request definition for expanding an existing VLAN's private IPv4 network address space.
+		/// </summary>
+		public static HttpRequest ExpandVlan = Base.WithRelativeUri("expandVlan");
+
+		/// <summary>
 		/// 	Request definition for deleting a VLAN.
 		/// </summary>
 		public static HttpRequest DeleteVlan = Base.WithRelativeUri("deleteVlan");

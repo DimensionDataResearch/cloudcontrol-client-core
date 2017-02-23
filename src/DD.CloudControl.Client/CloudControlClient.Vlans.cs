@@ -161,6 +161,77 @@ namespace DD.CloudControl.Client
 		}
 
 		/// <summary>
+		/// 	Update an existing VLAN.
+		/// </summary>
+		/// <param name="vlan">
+		/// 	The VLAN to update.
+		/// </param>
+		/// <param name="cancellationToken">
+		/// 	An optional cancellation token that can be used to cancel the request.
+		/// </param>
+		/// <returns>
+		/// 	The API response from CloudControl.
+		/// </returns>
+		public async Task<ApiResponseV2> EditVlan(Vlan vlan, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			if (vlan == null)
+				throw new ArgumentNullException(nameof(vlan));
+
+			Guid organizationId = await GetOrganizationId();
+			HttpRequest request = Requests.Network.EditVlan.WithTemplateParameter("organizationId", organizationId);
+
+			HttpResponseMessage response = await
+				_httpClient.PostAsJsonAsync(request,
+					new EditVlan
+					{
+						Id = vlan.Id,
+						Name = vlan.Name,
+						Description = vlan.Description
+					},
+					cancellationToken
+				);
+			using (response)
+			{
+				return await response.ReadContentAsApiResponseV2();
+			}
+		}
+
+		/// <summary>
+		/// 	Expand the  an existing VLAN.
+		/// </summary>
+		/// <param name="vlanId">
+		/// 	The Id of the VLAN to expand.
+		/// </param>
+		/// <param name="privateIPv4PrefixSize">
+		/// 	The new prefix size for the VLAN's private IPv4 network.
+		/// </param>
+		/// <param name="cancellationToken">
+		/// 	An optional cancellation token that can be used to cancel the request.
+		/// </param>
+		/// <returns>
+		/// 	The API response from CloudControl.
+		/// </returns>
+		public async Task<ApiResponseV2> ExpandVlan(Guid vlanId, int privateIPv4PrefixSize, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			Guid organizationId = await GetOrganizationId();
+			HttpRequest request = Requests.Network.ExpandVlan.WithTemplateParameter("organizationId", organizationId);
+
+			HttpResponseMessage response = await
+				_httpClient.PostAsJsonAsync(request,
+					new ExpandVlan
+					{
+						Id = vlanId,
+						PrivateIPv4PrefixSize = privateIPv4PrefixSize
+					},
+					cancellationToken
+				);
+			using (response)
+			{
+				return await response.ReadContentAsApiResponseV2();
+			}
+		}
+
+		/// <summary>
 		/// 	Delete an MCP 2.0 VLAN.
 		/// </summary>
 		/// <param name="id">
