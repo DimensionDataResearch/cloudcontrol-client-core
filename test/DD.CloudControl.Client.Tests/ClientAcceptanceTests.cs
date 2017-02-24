@@ -4,7 +4,7 @@ using Xunit;
 
 namespace DD.CloudControl.Client.Tests
 {
-	using Models.Directory;
+    using Models.Directory;
 	using Models.Network;
 	using Utilities;
 
@@ -53,6 +53,31 @@ namespace DD.CloudControl.Client.Tests
 				UserAccount account = await client.GetAccount();
 				Assert.NotNull(account);
 				Assert.Equal(Credentials.User, account.UserName);
+			}
+		}
+
+		/// <summary>
+		/// 	Get the current user's account details.
+		/// </summary>
+		[AcceptanceFact]
+		public async Task Client_CreateNetworkDomain()
+		{
+			Console.WriteLine(
+				$"User = '{Credentials.User}', Password = '{Credentials.Password}'"
+			);
+
+			CloudControlClient client = CloudControlClient.Create(
+				baseUri: new Uri("https://api-au.dimensiondata.com/"),
+				userName: Credentials.User,
+				password: Credentials.Password
+			);
+
+			using (client)
+			{
+				Guid networkDomainId = await client.CreateNetworkDomain("AU9", "CCC_ACCTEST", "CloudControl Client Acceptance Test", NetworkDomainType.Essentials);
+				Console.WriteLine(
+					$"networkDomainId = {networkDomainId}"
+				);
 			}
 		}
 

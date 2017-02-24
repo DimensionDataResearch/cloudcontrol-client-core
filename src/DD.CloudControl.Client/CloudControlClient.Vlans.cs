@@ -45,7 +45,7 @@ namespace DD.CloudControl.Client
 		/// <returns>
 		/// 	The Id of the new VLAN.
 		/// </returns>
-		public async Task<Guid> CreateVlan(string name, string description, string networkDomainId, string privateIPv4BaseAddress, int privateIPv4PrefixSize = 24, VlanGatewayAddressing gatewayAddressing = VlanGatewayAddressing.Low, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task<Guid> CreateVlan(string name, string description, Guid networkDomainId, string privateIPv4BaseAddress, int privateIPv4PrefixSize = 24, VlanGatewayAddressing gatewayAddressing = VlanGatewayAddressing.Low, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (String.IsNullOrWhiteSpace(name))
 				throw new ArgumentException("Must supply a valid name.", nameof(name));
@@ -53,7 +53,7 @@ namespace DD.CloudControl.Client
 			if (description == null)
 				description = "";
 
-			if (String.IsNullOrWhiteSpace(networkDomainId))
+			if (networkDomainId == Guid.Empty)
 				throw new ArgumentException("Must supply a valid network domain Id.", nameof(networkDomainId));
 
 			Guid organizationId = await GetOrganizationId();
@@ -139,7 +139,7 @@ namespace DD.CloudControl.Client
 		/// <returns>
 		/// 	A <see cref="Vlans"/> representing the page of results.
 		/// </returns>
-		public async Task<Vlans> ListVlans(string networkDomainId, Paging paging = null, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task<Vlans> ListVlans(Guid networkDomainId, Paging paging = null, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			Guid organizationId = await GetOrganizationId();
 

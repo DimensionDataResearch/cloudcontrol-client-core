@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 
 namespace DD.CloudControl.Client.Models.Network
 {
@@ -23,7 +24,7 @@ namespace DD.CloudControl.Client.Models.Network
 		/// 	The Id of the network domain in which the VLAN will be created.
 		/// </summary>
 		[JsonProperty("networkDomainId")]
-		public string NetworkDomainId { get; set; }
+		public Guid NetworkDomainId { get; set; }
 
 		/// <summary>
 		///		The base address of the VLAN's private IPv4 network.

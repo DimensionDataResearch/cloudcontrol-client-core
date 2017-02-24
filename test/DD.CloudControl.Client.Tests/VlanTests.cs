@@ -1,6 +1,7 @@
+using HTTPlease.Testability;
+using System;
 using System.Net;
 using System.Threading.Tasks;
-using HTTPlease.Testability;
 using Xunit;
 
 namespace DD.CloudControl.Client.Tests
@@ -36,7 +37,7 @@ namespace DD.CloudControl.Client.Tests
 
 			using (client)
 			{
-				Vlans vlans = await client.ListVlans(networkDomainId: "909dd855-4b2c-49a9-8151-46969a1a9380");
+				Vlans vlans = await client.ListVlans(networkDomainId: new Guid("909dd855-4b2c-49a9-8151-46969a1a9380"));
 				Assert.NotNull(vlans);
 				Assert.Equal(1, vlans.TotalCount);
 				Assert.Equal(1, vlans.Items.Count);
@@ -67,7 +68,7 @@ namespace DD.CloudControl.Client.Tests
 			using (client)
 			{
 				Vlans vlans = await client.ListVlans(
-					networkDomainId: "909dd855-4b2c-49a9-8151-46969a1a9380",
+					networkDomainId: new Guid("909dd855-4b2c-49a9-8151-46969a1a9380"),
 					paging: new Paging
 					{
 						PageNumber = 1,
