@@ -235,7 +235,7 @@ namespace DD.CloudControl.Client
 		/// <remarks>
 		/// 	Deletion of network domains is synchronous.
 		/// </remarks>
-		public async Task DeleteNetworkDomain(string id, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task DeleteNetworkDomain(Guid id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			Guid organizationId = await GetOrganizationId();
 

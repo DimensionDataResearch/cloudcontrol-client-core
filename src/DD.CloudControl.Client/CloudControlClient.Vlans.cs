@@ -281,7 +281,7 @@ namespace DD.CloudControl.Client
 		/// <remarks>
 		/// 	Deletion of VLANs is asynchronous.
 		/// </remarks>
-		public async Task DeleteVlan(string id, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task DeleteVlan(Guid id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			Guid organizationId = await GetOrganizationId();
 

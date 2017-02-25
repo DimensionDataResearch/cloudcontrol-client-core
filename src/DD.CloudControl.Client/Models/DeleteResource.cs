@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 
 namespace DD.CloudControl.Client.Models
 {
@@ -11,6 +12,6 @@ namespace DD.CloudControl.Client.Models
 		/// 	The Id of the resource to delete.
 		/// </summary>
 		[JsonProperty("id")]
-		public string Id { get; set; }
+		public Guid Id { get; set; }
 	}
 }
