@@ -278,10 +278,13 @@ namespace DD.CloudControl.Client
 		/// <param name="cancellationToken">
 		/// 	An optional cancellation token that can be used to cancel the request.
 		/// </param>
+		/// <returns>
+		/// 	The CloudControl API response.
+		/// </returns>
 		/// <remarks>
 		/// 	Deletion of VLANs is asynchronous.
 		/// </remarks>
-		public async Task DeleteVlan(Guid id, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task<ApiResponseV2> DeleteVlan(Guid id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			Guid organizationId = await GetOrganizationId();
 
@@ -298,9 +301,7 @@ namespace DD.CloudControl.Client
 				);
 			using (response)
 			{
-				ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
-				if (apiResponse.ResponseCode != ApiResponseCodeV2.Success)
-					throw CloudControlException.FromApiV2Response(apiResponse, response.StatusCode);
+				return await response.ReadContentAsApiResponseV2();
 			}
 		}
 	}
