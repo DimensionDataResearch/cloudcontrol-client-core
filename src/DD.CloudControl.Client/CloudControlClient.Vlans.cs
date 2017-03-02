@@ -235,7 +235,7 @@ namespace DD.CloudControl.Client
 		}
 
 		/// <summary>
-		/// 	Expand the  an existing VLAN.
+		/// 	Expand an existing VLAN.
 		/// </summary>
 		/// <param name="vlanId">
 		/// 	The Id of the VLAN to expand.

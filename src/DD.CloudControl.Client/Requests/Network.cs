@@ -23,7 +23,7 @@ namespace DD.CloudControl.Client.Requests
 		public static HttpRequest EditNetworkDomain = Base.WithRelativeUri("editNetworkDomain");
 
 		/// <summary>
-		/// 	Request definition for deleting a new network domain.
+		/// 	Request definition for deleting a network domain.
 		/// </summary>
 		public static HttpRequest DeleteNetworkDomain = Base.WithRelativeUri("deleteNetworkDomain");
 
@@ -76,5 +76,25 @@ namespace DD.CloudControl.Client.Requests
 		/// 	Request definition for listing VLANs in a network domain.
 		/// </summary>
 		public static HttpRequest ListVlansInNetworkDomain = Base.WithRelativeUri("vlan?networkDomainId={networkDomainId?}&pageNumber={pageNumber?}&pageSize={pageSize?}");
+
+		/// <summary>
+		/// 	Request definition for creating a new NAT rule.
+		/// </summary>
+		public static HttpRequest CreateNatRule = Base.WithRelativeUri("createNatRule");
+
+		/// <summary>
+		/// 	Request definition for retrieving a specific NAT rule by Id.
+		/// </summary>
+		public static HttpRequest GetNatRuleById = Base.WithRelativeUri("natRule/{natRuleId}");
+
+		/// <summary>
+		/// 	Request definition for listing NAT rules.
+		/// </summary>
+		public static HttpRequest ListNatRules = Base.WithRelativeUri("natRule?networkDomainId={networkDomainId?}&pageNumber={pageNumber?}&pageSize={pageSize?}");
+
+		/// <summary>
+		/// 	Request definition for deleting a NAT rule.
+		/// </summary>
+		public static HttpRequest DeleteNatRule = Base.WithRelativeUri("deleteNatRule");
 	}
 }
