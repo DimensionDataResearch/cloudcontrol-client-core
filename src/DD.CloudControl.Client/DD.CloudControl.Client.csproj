@@ -1,16 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
+    
+    <AssemblyName>DD.CloudControl.Client</AssemblyName>
     <DebugType>portable</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyName>DD.CloudControl.Client</AssemblyName>
+    
     <PackageId>DD.CloudControl.Client</PackageId>
     <PackageTags>DimensionData;CloudControl</PackageTags>
     <PackageProjectUrl>https://github.com/DimensionDataResearch/compute-client-core</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/DimensionDataResearch/compute-client-core/release/v1.0/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/DimensionDataResearch/compute-client-core</RepositoryUrl>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="HTTPlease" Version="1.0.0-beta7" />
