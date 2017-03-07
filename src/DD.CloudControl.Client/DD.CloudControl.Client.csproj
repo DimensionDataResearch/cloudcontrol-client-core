@@ -14,9 +14,9 @@
     <RepositoryUrl>https://github.com/DimensionDataResearch/compute-client-core</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="HTTPlease" Version="1.0.0-beta7" />
-    <PackageReference Include="HTTPlease.Core" Version="1.0.0-beta7" />
-    <PackageReference Include="HTTPlease.Formatters.Json" Version="1.0.0-beta7" />
-    <PackageReference Include="HTTPlease.Formatters.XmlSerializer" Version="1.0.0-beta7" />
+    <PackageReference Include="HTTPlease" Version="1.0.0-rc1-0213" />
+    <PackageReference Include="HTTPlease.Core" Version="1.0.0-rc1-0213" />
+    <PackageReference Include="HTTPlease.Formatters.Json" Version="1.0.0-rc1-0213" />
+    <PackageReference Include="HTTPlease.Formatters.XmlSerializer" Version="1.0.0-rc1-0213" />
   </ItemGroup>
 </Project>
