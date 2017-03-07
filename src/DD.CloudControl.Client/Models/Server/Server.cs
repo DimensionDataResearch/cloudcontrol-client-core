@@ -69,4 +69,17 @@ namespace DD.CloudControl.Client.Models.Server
 		[JsonProperty("started")]
 		public bool IsRunning { get; set; }
 	}
+
+	/// <summary>
+	/// 	Represents a page of <see cref="Server"/> results.
+	/// </summary>
+	public class Servers
+		: PagedResult<Server>
+	{
+		/// <summary>
+		/// 	The servers.
+		/// </summary>
+		[JsonProperty("server", ObjectCreationHandling = ObjectCreationHandling.Reuse)]
+		public override List<Server> Items { get; } = new List<Server>();
+	}
 }
