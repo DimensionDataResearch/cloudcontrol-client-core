@@ -6,145 +6,146 @@ using Xunit;
 
 namespace DD.CloudControl.Client.Tests
 {
-	using Models.Network;
-	using Newtonsoft.Json;
-	using Newtonsoft.Json.Linq;
+    using Models.Network;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
-	/// <summary>
-	/// 	Tests for the client's network domain APIs.
-	/// </summary>
-	public class NetworkDomainTests
-		: ClientTestBase
-	{
-		/// <summary>
-		/// 	List network domains (successful).
-		/// </summary>
-		[Fact]
-		public async Task ListNetworkDomains_Success()
-		{
-			CloudControlClient client = CreateCloudControlClientWithUserAccount(request =>
-			{
-				MessageAssert.AcceptsMediaType(request,
-					"application/json"
-				);
-				MessageAssert.HasRequestUri(request,
-					CreateApiUri($"caas/2.4/{TestOrganizationId}/network/networkDomain?datacenterId=AU9")
-				);
+    /// <summary>
+    /// 	Tests for the client's network domain APIs.
+    /// </summary>
+    public class NetworkDomainTests
+        : ClientTestBase
+    {
+        /// <summary>
+        /// 	List network domains (successful).
+        /// </summary>
+        [Fact]
+        public async Task ListNetworkDomains_Success()
+        {
+            CloudControlClient client = CreateCloudControlClientWithUserAccount(request =>
+            {
+                MessageAssert.AcceptsMediaType(request,
+                    "application/json"
+                );
+                MessageAssert.HasRequestUri(request,
+                    CreateApiUri($"caas/2.4/{TestOrganizationId}/network/networkDomain?datacenterId=AU9")
+                );
 
-				return request.CreateResponse(HttpStatusCode.OK,
-					responseBody: TestResponses.ListNetworkDomains_Success,
-					mediaType: "application/json"
-				);
-			});
+                return request.CreateResponse(HttpStatusCode.OK,
+                    responseBody: TestResponses.ListNetworkDomains_Success,
+                    mediaType: "application/json"
+                );
+            });
 
-			using (client)
-			{
-				NetworkDomains networkDomains = await client.ListNetworkDomains(datacenterId: "AU9");
-				Assert.NotNull(networkDomains);
-				Assert.Equal(2, networkDomains.TotalCount);
-				Assert.Equal(2, networkDomains.Items.Count);
+            using (client)
+            {
+                NetworkDomainQuery query = NetworkDomainQuery.ByDatacenter("AU9");
+                NetworkDomains networkDomains = await client.ListNetworkDomains(query);
+                Assert.NotNull(networkDomains);
+                Assert.Equal(2, networkDomains.TotalCount);
+                Assert.Equal(2, networkDomains.Items.Count);
 
-				Assert.Equal("AU9", networkDomains.Items[0].DatacenterId);
-				Assert.Equal("AU9", networkDomains.Items[1].DatacenterId);
-			}
-		}
+                Assert.Equal("AU9", networkDomains.Items[0].DatacenterId);
+                Assert.Equal("AU9", networkDomains.Items[1].DatacenterId);
+            }
+        }
 
-		/// <summary>
-		/// 	List a page of network domains (successful).
-		/// </summary>
-		[Fact]
-		public async Task ListNetworkDomains_Paged_Success()
-		{
-			CloudControlClient client = CreateCloudControlClientWithUserAccount(request =>
-			{
-				MessageAssert.AcceptsMediaType(request,
-					"application/json"
-				);
-				MessageAssert.HasRequestUri(request,
-					CreateApiUri($"caas/2.4/{TestOrganizationId}/network/networkDomain?datacenterId=AU9&pageNumber=1&pageSize=250")
-				);
+        /// <summary>
+        /// 	List a page of network domains (successful).
+        /// </summary>
+        [Fact]
+        public async Task ListNetworkDomains_Paged_Success()
+        {
+            CloudControlClient client = CreateCloudControlClientWithUserAccount(request =>
+            {
+                MessageAssert.AcceptsMediaType(request,
+                    "application/json"
+                );
+                MessageAssert.HasRequestUri(request,
+                    CreateApiUri($"caas/2.4/{TestOrganizationId}/network/networkDomain?datacenterId=AU9&pageNumber=1&pageSize=250")
+                );
 
-				return request.CreateResponse(HttpStatusCode.OK,
-					responseBody: TestResponses.ListNetworkDomains_Success,
-					mediaType: "application/json"
-				);
-			});
+                return request.CreateResponse(HttpStatusCode.OK,
+                    responseBody: TestResponses.ListNetworkDomains_Success,
+                    mediaType: "application/json"
+                );
+            });
 
-			using (client)
-			{
-				NetworkDomains networkDomains = await client.ListNetworkDomains(
-					datacenterId: "AU9",
-					paging: new Paging
-					{
-						PageNumber = 1,
-						PageSize = 250
-					}
-				);
-				Assert.NotNull(networkDomains);
-				Assert.Equal(2, networkDomains.TotalCount);
-				Assert.Equal(2, networkDomains.Items.Count);
-			}
-		}
+            using (client)
+            {
+                NetworkDomainQuery query = NetworkDomainQuery.ByDatacenter("AU9");
+                Paging paging = new Paging
+                {
+                    PageNumber = 1,
+                    PageSize = 250
+                };
 
-		/// <summary>
-		/// 	Create a new network domain.
-		/// </summary>
-		[Fact]
-		public async Task CreateNetworkDomain_Success()
-		{
-			CloudControlClient client = CreateCloudControlClientWithUserAccount(async request =>
-			{
-				MessageAssert.AcceptsMediaType(request,
-					"application/json"
-				);
-				MessageAssert.HasRequestUri(request,
-					CreateApiUri($"caas/2.4/{TestOrganizationId}/network/deployNetworkDomain")
-				);
+                NetworkDomains networkDomains = await client.ListNetworkDomains(query, paging);
+                Assert.NotNull(networkDomains);
+                Assert.Equal(2, networkDomains.TotalCount);
+                Assert.Equal(2, networkDomains.Items.Count);
+            }
+        }
 
-				JObject expectedRequestBody = (JObject)JToken.Parse(
-					TestRequests.CreateNetworkDomain_Success
-				);
-				
-				JObject actualRequestBody = (JObject)JToken.Parse(
-					await request.Content.ReadAsStringAsync()
-				);
+        /// <summary>
+        /// 	Create a new network domain.
+        /// </summary>
+        [Fact]
+        public async Task CreateNetworkDomain_Success()
+        {
+            CloudControlClient client = CreateCloudControlClientWithUserAccount(async request =>
+            {
+                MessageAssert.AcceptsMediaType(request,
+                    "application/json"
+                );
+                MessageAssert.HasRequestUri(request,
+                    CreateApiUri($"caas/2.4/{TestOrganizationId}/network/deployNetworkDomain")
+                );
 
-				Assert.Equal(
-					expectedRequestBody.ToString(Formatting.Indented).Trim(),
-					actualRequestBody.ToString(Formatting.Indented).Trim()
-				);
+                JObject expectedRequestBody = (JObject)JToken.Parse(
+                    TestRequests.CreateNetworkDomain_Success
+                );
 
-				return request.CreateResponse(HttpStatusCode.OK,
-					responseBody: TestResponses.CreateNetworkDomain_Success,
-					mediaType: "application/json"
-				);
-			});
+                JObject actualRequestBody = (JObject)JToken.Parse(
+                    await request.Content.ReadAsStringAsync()
+                );
 
-			using (client)
-			{
-				Guid expectedNetworkDomainId = new Guid("f14a871f-9a25-470c-aef8-51e13202e1aa");
-				Guid actualNetworkDomainId = await client.CreateNetworkDomain(
-					datacenterId: "AU9",
-					name: "A Network Domain",
-					description: "This is a network domain",
-					type: NetworkDomainType.Essentials
-				);
-				Assert.Equal(
-					expectedNetworkDomainId,
-					actualNetworkDomainId
-				);
-			}
-		}
+                Assert.Equal(
+                    expectedRequestBody.ToString(Formatting.Indented).Trim(),
+                    actualRequestBody.ToString(Formatting.Indented).Trim()
+                );
 
-		/// <summary>
-		/// 	Request bodies used in tests.
-		/// </summary>
-		static class TestRequests
-		{
-			/// <summary>
-			/// 	Request for CreateNetworkDomain (successful).
-			/// </summary>
-			public const string CreateNetworkDomain_Success = @"
+                return request.CreateResponse(HttpStatusCode.OK,
+                    responseBody: TestResponses.CreateNetworkDomain_Success,
+                    mediaType: "application/json"
+                );
+            });
+
+            using (client)
+            {
+                Guid expectedNetworkDomainId = new Guid("f14a871f-9a25-470c-aef8-51e13202e1aa");
+                Guid actualNetworkDomainId = await client.CreateNetworkDomain(
+                    datacenterId: "AU9",
+                    name: "A Network Domain",
+                    description: "This is a network domain",
+                    type: NetworkDomainType.Essentials
+                );
+                Assert.Equal(
+                    expectedNetworkDomainId,
+                    actualNetworkDomainId
+                );
+            }
+        }
+
+        /// <summary>
+        /// 	Request bodies used in tests.
+        /// </summary>
+        static class TestRequests
+        {
+            /// <summary>
+            /// 	Request for CreateNetworkDomain (successful).
+            /// </summary>
+            public const string CreateNetworkDomain_Success = @"
 {
 	""name"": ""A Network Domain"",
 	""description"": ""This is a network domain"",
@@ -152,17 +153,17 @@ namespace DD.CloudControl.Client.Tests
 	""type"": ""ESSENTIALS""	
 }
 			";
-		}
+        }
 
-		/// <summary>
-		/// 	Response bodies used in tests.
-		/// </summary>
-		static class TestResponses
-		{
-			/// <summary>
-			/// 	Response for ListNetworkDomains (successful).
-			/// </summary>
-			public const string ListNetworkDomains_Success = @"
+        /// <summary>
+        /// 	Response bodies used in tests.
+        /// </summary>
+        static class TestResponses
+        {
+            /// <summary>
+            /// 	Response for ListNetworkDomains (successful).
+            /// </summary>
+            public const string ListNetworkDomains_Success = @"
 {
 	""networkDomain"": [
 	{
@@ -193,10 +194,10 @@ namespace DD.CloudControl.Client.Tests
 }
 			";
 
-			/// <summary>
-			/// 	Response for CreateNetworkDomain (successful).
-			/// </summary>
-			public const string CreateNetworkDomain_Success = @"
+            /// <summary>
+            /// 	Response for CreateNetworkDomain (successful).
+            /// </summary>
+            public const string CreateNetworkDomain_Success = @"
 {
 	""operation"": ""DEPLOY_NETWORK_DOMAIN"",
 	""responseCode"": ""IN_PROGRESS"",
@@ -212,6 +213,6 @@ namespace DD.CloudControl.Client.Tests
 	""requestId"": ""na9_20160321T074626030-0400_7e9fffe7-190b-46f2-9107-9d52fe57d0ad""
 }
 			";
-		}
-	}
+        }
+    }
 }

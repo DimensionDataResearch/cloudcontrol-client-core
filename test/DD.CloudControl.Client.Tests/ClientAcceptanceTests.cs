@@ -100,7 +100,8 @@ namespace DD.CloudControl.Client.Tests
 					PageSize = 20
 				};
 
-				NetworkDomains networkDomains = await client.ListNetworkDomains("AU9", page);
+				NetworkDomainQuery query = NetworkDomainQuery.ByDatacenter("AU9");
+				NetworkDomains networkDomains = await client.ListNetworkDomains(query, page);
 				int expectedTotalCount = networkDomains.TotalCount;
 				int totalCount = 0;
 				while (!networkDomains.IsEmpty)
@@ -111,7 +112,7 @@ namespace DD.CloudControl.Client.Tests
 						Console.WriteLine("NetworkDomain: " + networkDomain.Name);
 
 					page++;
-					networkDomains = await client.ListNetworkDomains("AU9", page);
+					networkDomains = await client.ListNetworkDomains(query, page);
 				}
 
 				Assert.Equal(expectedTotalCount, totalCount);

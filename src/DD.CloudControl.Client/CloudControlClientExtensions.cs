@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DD.CloudControl.Client
 {
+	using Models.Network;
 	using Models.Server;
 
 	/// <summary>
@@ -11,6 +13,35 @@ namespace DD.CloudControl.Client
 	/// </summary>
 	public static class CloudControlClientExtensions
 	{
+		/// <summary>
+		/// 	Retrieve a the first matching network domain by name and datacenter.
+		/// </summary>
+		/// <param name="client">
+		/// 	The CloudControl API client.
+		/// </param>
+		/// <param name="name">
+		/// 	The name of the network domain to retrieve.
+		/// </param>
+		/// <param name="datacenterId">
+		/// 	The Id of the datacenter containing the network domain to retrieve.
+		/// </param>
+		/// <param name="cancellationToken">
+		/// 	An optional cancellation token that can be used to cancel the request.
+		/// </param>
+		/// <returns>
+		/// 	A <see cref="NetworkDomain"/> representing the network domain, or <c>null</c> if no network domain was found with the specified Id.
+		/// </returns>
+		public static async Task<NetworkDomain> GetNetworkDomainByName(this CloudControlClient client, string name, string datacenterId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			if (client == null)
+				throw new ArgumentNullException(nameof(client));
+
+			NetworkDomainQuery query = NetworkDomainQuery.ByNameAndDatacenter(name, datacenterId);
+			NetworkDomains matchingNetworkDomains = await client.ListNetworkDomains(query, cancellationToken: cancellationToken);
+
+			return matchingNetworkDomains.Items.FirstOrDefault();
+		}
+
 		/// <summary>
 		/// 	Retrieve a list of servers in the specified network domain.
 		/// </summary>

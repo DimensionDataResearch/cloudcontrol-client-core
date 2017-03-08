@@ -53,51 +53,13 @@ namespace DD.CloudControl.Client
 		}
 
 		/// <summary>
-		/// 	Retrieve a specific network domain by name and datacenter.
-		/// </summary>
-		/// <param name="name">
-		/// 	The name of the network domain to retrieve.
-		/// </param>
-		/// <param name="datacenterId">
-		/// 	The Id of the datacenter containing the network domain to retrieve.
-		/// </param>
-		/// <param name="cancellationToken">
-		/// 	An optional cancellation token that can be used to cancel the request.
-		/// </param>
-		/// <returns>
-		/// 	A <see cref="NetworkDomain"/> representing the network domain, or <c>null</c> if no network domain was found with the specified Id.
-		/// </returns>
-		public async Task<NetworkDomain> GetNetworkDomainByName(string name, string datacenterId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			Guid organizationId = await GetOrganizationId();
-
-			HttpRequest request = Requests.Network.GetNetworkDomainByName
-				.WithTemplateParameters(new
-				{
-					organizationId,
-					name,
-					datacenterId
-				});
-
-			using (HttpResponseMessage response = await _httpClient.GetAsync(request, cancellationToken))
-			{
-				if (!response.IsSuccessStatusCode)
-					throw await CloudControlException.FromApiV2Response(response);
-
-				NetworkDomains matchingNetworkDomains = await response.ReadContentAsAsync<NetworkDomains>();
-				
-				return !matchingNetworkDomains.IsEmpty ? matchingNetworkDomains.Items[0] : null;
-			}
-		}
-
-		/// <summary>
 		/// 	Retrieve a list of network domains in the specified datacenter.
 		/// </summary>
-		/// <param name="datacenterId">
-		/// 	An optional <see cref="Paging"/> configuration for the results.
+		/// <param name="query">
+		/// 	A <see cref="NetworkDomainQuery"/> that determines which network domains are retrieved.
 		/// </param>
 		/// <param name="paging">
-		/// 	The Id of the target datacenter (e.g. AU10, NA9).
+		/// 	An optional <see cref="Paging"/> configuration for the results.
 		/// </param>
 		/// <param name="cancellationToken">
 		/// 	An optional cancellation token that can be used to cancel the request.
@@ -105,15 +67,19 @@ namespace DD.CloudControl.Client
 		/// <returns>
 		/// 	A <see cref="NetworkDomains"/> representing the page of results.
 		/// </returns>
-		public async Task<NetworkDomains> ListNetworkDomains(string datacenterId, Paging paging = null, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task<NetworkDomains> ListNetworkDomains(NetworkDomainQuery query, Paging paging = null, CancellationToken cancellationToken = default(CancellationToken))
 		{
+			if (query == null)
+				throw new ArgumentNullException(nameof(query));
+
 			Guid organizationId = await GetOrganizationId();
 
 			HttpRequest request = Requests.Network.ListNetworkDomains
 				.WithTemplateParameters(new
 				{
 					organizationId,
-					datacenterId
+					networkDomainName = query.Name,
+					datacenterId = query.DatacenterId
 				})
 				.WithPaging(paging);
 
