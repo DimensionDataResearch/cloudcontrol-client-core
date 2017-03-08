@@ -14,7 +14,35 @@ namespace DD.CloudControl.Client
 	public static class CloudControlClientExtensions
 	{
 		/// <summary>
-		/// 	Retrieve a the first matching network domain by name and datacenter.
+		/// 	List network domains in the specified datacenter.
+		/// </summary>
+		/// <param name="client">
+		/// 	The CloudControl API client.
+		/// </param>
+		/// <param name="datacenterId">
+		/// 	The Id of the datacenter containing the network domain to retrieve.
+		/// </param>
+		/// <param name="paging">
+		/// 	An optional <see cref="Paging"/> configuration for the results.
+		/// </param>
+		/// <param name="cancellationToken">
+		/// 	An optional cancellation token that can be used to cancel the request.
+		/// </param>
+		/// <returns>
+		/// 	The network domains (as <see cref="NetworkDomains"/>).
+		/// </returns>
+		public static Task<NetworkDomains> ListNetworkDomains(this CloudControlClient client, string datacenterId, Paging paging, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			if (client == null)
+				throw new ArgumentNullException(nameof(client));
+			
+			NetworkDomainQuery query = NetworkDomainQuery.ByDatacenter(datacenterId);
+
+			return client.ListNetworkDomains(query, paging, cancellationToken);
+		}
+
+		/// <summary>
+		/// 	Retrieve the first network domain in the specified datacenter with the specified name.
 		/// </summary>
 		/// <param name="client">
 		/// 	The CloudControl API client.
