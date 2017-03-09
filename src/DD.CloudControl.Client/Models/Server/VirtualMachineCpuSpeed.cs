@@ -5,7 +5,7 @@ namespace DD.CloudControl.Client.Models.Server
     /// <summary>
     /// 	Available speeds for CPUs in CloudControl.
     /// </summary>
-    public enum VirtualMachineCpuSpeed
+    public enum VirtualMachineCPUSpeed
 	{
 		/// <summary>
 		///		An unknown CPU speed.

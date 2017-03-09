@@ -32,7 +32,7 @@ namespace DD.CloudControl.Client.Models.Server
 		/// 	Information about the server's CPU(s).
 		/// </summary>
 		[JsonProperty("cpu", ObjectCreationHandling = ObjectCreationHandling.Reuse)]
-		public VirtualMachineCpu Cpu { get; } = new VirtualMachineCpu();
+		public VirtualMachineCPU CPU { get; } = new VirtualMachineCPU();
 
 		/// <summary>
 		/// 	The amount of RAM (in gigabytes) assigned to the server.

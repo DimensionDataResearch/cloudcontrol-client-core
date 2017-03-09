@@ -5,7 +5,7 @@ namespace DD.CloudControl.Client.Models.Server
     /// <summary>
     /// 	The CPU configuration for a virtual machine.
     /// </summary>
-    public class VirtualMachineCpu
+    public class VirtualMachineCPU
 	{
 		/// <summary>
 		/// 	The number of CPUs assigned to the virtual machine.
@@ -17,7 +17,7 @@ namespace DD.CloudControl.Client.Models.Server
 		/// 	The speed (performance level) assigned to the virtual machine's CPU(s).
 		/// </summary>
 		[JsonProperty("speed", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public VirtualMachineCpuSpeed Speed { get; set ;}
+		public VirtualMachineCPUSpeed Speed { get; set ;}
 
 		/// <summary>
 		/// 	The number of cores per CPU.
