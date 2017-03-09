@@ -15,6 +15,40 @@ namespace DD.CloudControl.Client
 	public partial class CloudControlClient
 	{
 		/// <summary>
+		/// 	Create a new server.
+		/// </summary>
+		/// <param name="deploymentConfiguration">
+		/// 	The configuration that the new server will be deployed with.
+		/// </param>
+		/// <param name="cancellationToken">
+		/// 	An optional cancellation token that can be used to cancel the request.
+		/// </param>
+		/// <returns>
+		/// 	The Id of the new server.
+		/// </returns>
+		public async Task<Guid> CreateServer(ServerDeploymentConfiguration deploymentConfiguration, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			if (deploymentConfiguration == null)
+				throw new ArgumentNullException(nameof(deploymentConfiguration));
+
+			Guid organizationId = await GetOrganizationId();
+			HttpRequest createServer = Requests.Server.CreateServer.WithTemplateParameter("organizationId", organizationId);
+
+			using (HttpResponseMessage response = await _httpClient.PostAsJsonAsync(createServer, deploymentConfiguration, cancellationToken))
+			{
+				ApiResponseV2 apiResponse = await response.ReadContentAsApiResponseV2();
+				if (apiResponse.ResponseCode != ApiResponseCodeV2.InProgress)
+					throw CloudControlException.FromApiV2Response(apiResponse, response.StatusCode);
+
+				string serverId = apiResponse.InfoMessages.GetByName("serverId");
+				if (String.IsNullOrWhiteSpace(serverId))
+					throw new CloudControlException("Received an unexpected response from the CloudControl API (missing 'serverId' message).");
+
+				return new Guid(serverId);
+			}
+		}
+
+		/// <summary>
 		/// 	Retrieve a specific server by Id.
 		/// </summary>
 		/// <param name="serverId">
