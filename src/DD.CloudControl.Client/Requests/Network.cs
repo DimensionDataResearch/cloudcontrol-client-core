@@ -63,14 +63,9 @@ namespace DD.CloudControl.Client.Requests
 		public static HttpRequest GetVlanById = Base.WithRelativeUri("vlan/{vlanId}");
 
 		/// <summary>
-		/// 	Request definition for retrieving a VLAN by name.
+		/// 	Request definition for listing VLANs.
 		/// </summary>
-		public static HttpRequest GetVlanByName = Base.WithRelativeUri("vlan?networkDomainId={networkDomainId}&name={name}");
-
-		/// <summary>
-		/// 	Request definition for listing VLANs in a network domain.
-		/// </summary>
-		public static HttpRequest ListVlansInNetworkDomain = Base.WithRelativeUri("vlan?networkDomainId={networkDomainId?}&pageNumber={pageNumber?}&pageSize={pageSize?}");
+		public static HttpRequest ListVlans = Base.WithRelativeUri("vlan?name={name={vlanName?}?}&networkDomainId={networkDomainId?}&pageNumber={pageNumber?}&pageSize={pageSize?}");
 
 		/// <summary>
 		/// 	Request definition for creating a new NAT rule.

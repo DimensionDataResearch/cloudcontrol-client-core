@@ -125,48 +125,10 @@ namespace DD.CloudControl.Client
 		}
 
 		/// <summary>
-		/// 	Retrieve a specific VLAN by name and datacenter.
+		/// 	Retrieve a list of VLANs.
 		/// </summary>
-		/// <param name="name">
-		/// 	The name of the VLAN to retrieve.
-		/// </param>
-		/// <param name="networkDomainId">
-		/// 	The Id of the network domain containing the VLAN to retrieve.
-		/// </param>
-		/// <param name="cancellationToken">
-		/// 	An optional cancellation token that can be used to cancel the request.
-		/// </param>
-		/// <returns>
-		/// 	A <see cref="NetworkDomain"/> representing the VLAN, or <c>null</c> if no network domain was found with the specified Id.
-		/// </returns>
-		public async Task<Vlan> GetVlanByName(string name, Guid networkDomainId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			Guid organizationId = await GetOrganizationId();
-
-			HttpRequest request = Requests.Network.GetVlanByName
-				.WithTemplateParameters(new
-				{
-					organizationId,
-					name,
-					networkDomainId
-				});
-
-			using (HttpResponseMessage response = await _httpClient.GetAsync(request, cancellationToken))
-			{
-				if (!response.IsSuccessStatusCode)
-					throw await CloudControlException.FromApiV2Response(response);
-
-				Vlans matchingVlans = await response.ReadContentAsAsync<Vlans>();
-				
-				return !matchingVlans.IsEmpty ? matchingVlans.Items[0] : null;
-			}
-		}
-
-		/// <summary>
-		/// 	Retrieve a list of VLANs in the specified network domain.
-		/// </summary>
-		/// <param name="networkDomainId">
-		/// 	The Id of the target network domain.
+		/// <param name="query">
+		/// 	A <see cref="VlanQuery"/> that determines which VLANs will be retrieved.
 		/// </param>
 		/// <param name="paging">
 		/// 	An optional <see cref="Paging"/> configuration for the results.
@@ -177,15 +139,19 @@ namespace DD.CloudControl.Client
 		/// <returns>
 		/// 	A <see cref="Vlans"/> representing the page of results.
 		/// </returns>
-		public async Task<Vlans> ListVlans(Guid networkDomainId, Paging paging = null, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task<Vlans> ListVlans(VlanQuery query, Paging paging = null, CancellationToken cancellationToken = default(CancellationToken))
 		{
+			if (query == null)
+				throw new ArgumentNullException(nameof(query));
+
 			Guid organizationId = await GetOrganizationId();
 
-			HttpRequest request = Requests.Network.ListVlansInNetworkDomain
+			HttpRequest request = Requests.Network.ListVlans
 				.WithTemplateParameters(new
 				{
 					organizationId,
-					networkDomainId
+					vlanName = query.Name,
+					networkDomainId = query.NetworkDomainId
 				})
 				.WithPaging(paging);
 
