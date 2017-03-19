@@ -4,6 +4,8 @@ using System;
 
 namespace DD.CloudControl.Client.Models.Server
 {
+	using Image;
+	
     /// <summary>
     /// 	Represents an MCP 2.0 Server (virtual machine).
     /// </summary>

@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace DD.CloudControl.Client.Models.Server
+namespace DD.CloudControl.Client.Models.Image
 {
     /// <summary>
     /// 	Information held by the MCP about an operating system.
