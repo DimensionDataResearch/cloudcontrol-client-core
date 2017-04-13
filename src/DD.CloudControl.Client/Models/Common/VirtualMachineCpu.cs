@@ -1,7 +1,6 @@
 using Newtonsoft.Json;
-using System;
 
-namespace DD.CloudControl.Client.Models.Server
+namespace DD.CloudControl.Client.Models.Common
 {
     /// <summary>
     /// 	The CPU configuration for a virtual machine.

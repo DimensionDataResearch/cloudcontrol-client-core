@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 namespace DD.CloudControl.Client.Models.Server
 {
+	using Common;
+
 	/// <summary>
 	/// 	The configuration for deploying a new server.
 	/// </summary>

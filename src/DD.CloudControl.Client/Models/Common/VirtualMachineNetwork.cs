@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System;
 
-namespace DD.CloudControl.Client.Models.Server
+namespace DD.CloudControl.Client.Models.Common
 {
     /// <summary>
     /// 	Represents the network configuration for a virtual machine.

@@ -4,28 +4,28 @@ using System.Collections.Generic;
 namespace DD.CloudControl.Client.Models.Image
 {
     /// <summary>
-    /// 	A user-supplied image.
+    ///     Represents a Customer (customer-provided) server image in CloudControl.
     /// </summary>
     public class CustomerImage
-		: Image
-	{
-		/// <summary>
-		/// 	The image type.
-		/// </summary>
-		[JsonIgnore]
-		public override ImageType ImageType => ImageType.OS;
-	}
+        : Image
+    {
+        /// <summary>
+        ///     The image type.
+        /// </summary>
+        [JsonIgnore]
+        public override ImageType ImageType => ImageType.Customer;
+    }
 
-	/// <summary>
-	/// 	Represents a page of OS images from CloudControl.
-	/// </summary>
-	public class CustomerImages
-		: PagedResult<CustomerImage>
-	{
-		/// <summary>
-		/// 	The customer images.
-		/// </summary>
-		[JsonProperty("customerImage", ObjectCreationHandling = ObjectCreationHandling.Reuse)]
-		public override List<CustomerImage> Items { get; } = new List<CustomerImage>();
-	}
+    /// <summary>
+    ///     A page of <see cref="CustomerImage"/> results.
+    /// </summary>
+    public class CustomerImages
+        : PagedResult<CustomerImage>
+    {
+        /// <summary>
+        ///     The <see cref="CustomerImage"/> results.
+        /// </summary>
+        [JsonProperty("customerImages", ObjectCreationHandling = ObjectCreationHandling.Reuse)]
+        public override List<CustomerImage> Items { get; } = new List<CustomerImage>();
+    }
 }

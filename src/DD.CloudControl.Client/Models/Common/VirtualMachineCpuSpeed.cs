@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace DD.CloudControl.Client.Models.Server
+namespace DD.CloudControl.Client.Models.Common
 {
     /// <summary>
     /// 	Available speeds for CPUs in CloudControl.

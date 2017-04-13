@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace DD.CloudControl.Client
 {
+	using Models.Common;
 	using Models.Image;
 	using Models.Server;
 

@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace DD.CloudControl.Client.Models.Server
+namespace DD.CloudControl.Client.Models.Common
 {
     /// <summary>
     /// 	The configuration for a virtual machine's network adapter.

@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace DD.CloudControl.Client.Models.Server
+namespace DD.CloudControl.Client.Models.Common
 {
     /// <summary>
     /// 	Represents the configuration for a disk in a virtual machine.
