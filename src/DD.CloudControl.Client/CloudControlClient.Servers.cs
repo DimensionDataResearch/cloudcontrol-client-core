@@ -160,5 +160,71 @@ namespace DD.CloudControl.Client
 				return await response.ReadContentAsApiResponseV2();
 			}
 		}
+
+        /// <summary>
+        ///     Start an MCP 2.0 server.
+        /// </summary>
+        /// <param name="id">
+        ///     The Id of the server to start.
+        /// </param>
+        /// <returns>
+        ///     The CloudControl API response.
+        /// </returns>
+        /// <remarks>
+        ///     Starting servers is asynchronous.
+        /// </remarks>
+
+        public async Task<ApiResponseV2> StartServer(Guid id)
+        {
+            Guid organizationId = await GetOrganizationId();
+            HttpRequest startServer = Requests.Server.StartServer
+				.WithTemplateParameters(new
+				{
+					organizationId
+				});
+
+			HttpResponseMessage response = await
+				_httpClient.PostAsJsonAsync(startServer,
+					new PowerResource { Id = id }
+					
+				);
+			using (response)
+			{
+				return await response.ReadContentAsApiResponseV2();
+			}
+        }
+
+		/// <summary>
+		///     Shutdown an MCP 2.0 server.
+		/// </summary>
+		/// <param name="id">
+		///     The Id of the server to shutdown.
+		/// </param>
+		/// <returns>
+		///     The CloudControl API response.
+		/// </returns>
+		/// <remarks>
+		///     Shutting down servers is asynchronous.
+		/// </remarks>
+
+		public async Task<ApiResponseV2> ShutdownServer(Guid id)
+		{
+			Guid organizationId = await GetOrganizationId();
+            HttpRequest shutdownServer = Requests.Server.ShutdownServer
+				.WithTemplateParameters(new
+				{
+					organizationId
+				});
+
+			HttpResponseMessage response = await
+                _httpClient.PostAsJsonAsync(shutdownServer,
+					new PowerResource { Id = id }
+
+				);
+			using (response)
+			{
+				return await response.ReadContentAsApiResponseV2();
+			}
+		}
 	}
 }

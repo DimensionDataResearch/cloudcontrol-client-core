@@ -36,5 +36,17 @@ namespace DD.CloudControl.Client.Requests
 		/// 	Request definition for deleting a server.
 		/// </summary>
 		public static HttpRequest DeleteServer = Base.WithRelativeUri("deleteServer");
+
+		/// <summary>
+		///     Request definition for starting a server.
+		/// </summary>
+		public static HttpRequest StartServer = Base.WithRelativeUri("startServer");
+
+		/// <summary>
+		///     Request definition for starting a server.
+		/// </summary>
+		public static HttpRequest ShutdownServer = Base.WithRelativeUri("shutdownServer");
+
+
 	}
 }
