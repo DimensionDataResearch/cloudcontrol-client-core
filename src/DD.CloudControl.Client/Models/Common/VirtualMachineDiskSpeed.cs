@@ -21,16 +21,22 @@ namespace DD.CloudControl.Client.Models.Common
 		[EnumMember(Value = "LOW")]
 		Low = 1,
 
+        /// <summary>
+        ///      Economy disk
+        /// </summary>
+        [EnumMember(Value = "ECONOMY")]
+        Economy = 2,
+
 		/// <summary>
 		///		Standard disk speed.
 		/// </summary>
 		[EnumMember(Value = "STANDARD")]
-		Standard = 2,
+		Standard = 3,
 
 		/// <summary>
 		///		High-performance disk.
 		/// </summary>
 		[EnumMember(Value = "HIGHPERFORMANCE")]
-		HighPerformance = 3
+		HighPerformance = 4
 	}
 }
