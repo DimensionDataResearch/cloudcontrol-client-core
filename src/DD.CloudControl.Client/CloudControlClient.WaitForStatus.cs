@@ -7,6 +7,7 @@ namespace DD.CloudControl.Client
 {
     using Models;
 	using Models.Network;
+	using Models.Server;
 
 	/// <summary>
 	///		The CloudControl API client. 
@@ -79,6 +80,8 @@ namespace DD.CloudControl.Client
 				return async (resourceId, cancellationToken) => await GetNetworkDomain(resourceId, cancellationToken);
 			else if (resourceType == typeof(Vlan))
 				return async (resourceId, cancellationToken) => await GetVlan(resourceId, cancellationToken);
+			else if (resourceType == typeof(Server))
+				return async (resourceId, cancellationToken) => await GetServer(resourceId, cancellationToken);
 			else
 				throw new InvalidOperationException($"Unexpected resource type '{typeof(TResource)}'");
 		}
