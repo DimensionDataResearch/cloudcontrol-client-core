@@ -38,7 +38,7 @@ namespace DD.CloudControl.Client.Models.Server
 		/// <summary>
 		/// 	The CPU configuration for the new server.
 		/// </summary>
-		[JsonProperty("cpu")]
+		[JsonProperty("cpu", ObjectCreationHandling = ObjectCreationHandling.Reuse)]
 		public VirtualMachineCPU CPU { get; set; }
 
 		/// <summary>
@@ -50,13 +50,13 @@ namespace DD.CloudControl.Client.Models.Server
 		/// <summary>
 		/// 	The disk configuration for the new server.
 		/// </summary>
-		[JsonProperty("disk")]
+		[JsonProperty("disk", ObjectCreationHandling = ObjectCreationHandling.Reuse)]
 		public List<VirtualMachineDisk> Disks { get; } = new List<VirtualMachineDisk>();
 
 		/// <summary>
 		/// 	The network configuration for the new server.
 		/// </summary>
-		[JsonProperty("networkInfo")]
+		[JsonProperty("networkInfo", ObjectCreationHandling = ObjectCreationHandling.Reuse)]
 		public VirtualMachineNetwork Network { get; } = new VirtualMachineNetwork();
 		
 		/// <summary>

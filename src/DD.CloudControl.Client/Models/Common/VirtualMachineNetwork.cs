@@ -18,8 +18,8 @@ namespace DD.CloudControl.Client.Models.Common
 		/// <summary>
 		/// 	Information about the virtual machine's primary network adapter.
 		/// </summary>
-		[JsonProperty("primaryNic")]
-		public VirtualMachineNetworkAdapter PrimaryNetworkAdapter { get; }
+		[JsonProperty("primaryNic", ObjectCreationHandling = ObjectCreationHandling.Reuse)]
+		public VirtualMachineNetworkAdapter PrimaryNetworkAdapter { get; } = new VirtualMachineNetworkAdapter();
 
 		/// <summary>
 		/// 	Information about the virtual machine's primary network adapter.
