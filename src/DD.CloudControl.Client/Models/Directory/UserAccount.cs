@@ -82,6 +82,6 @@ namespace DD.CloudControl.Client.Models.Directory
 		/// </summary>
 		[XmlArray("roles")]
 		[XmlArrayItem("role")]
-		public List<Role> MemberOfRoles { get; } = new List<Role>();
+		public List<Role> MemberOfRoles { get; set; } = new List<Role>();
 	}
 }
